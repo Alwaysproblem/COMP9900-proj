@@ -55,3 +55,4 @@ def load_hotel_info():
 # print(sql)
     conn.execute(sql)
     conn.commit()
+12345
