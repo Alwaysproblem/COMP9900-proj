@@ -1,2 +1,2 @@
-Week 3 Work diary
-Joined the group(late enrolled). Joined Trello & git hub of the team. We had an early discussion of the project. During the discussion, we also talked about the structure and contents of the project proposal. By the end of week3, I finished the AIM part of the proposal,I also checked and made modifications to the other parts of the proposal.
+z5106189 week4
+We had meeting and made a rough plan, each of us is assigned a task of writing a webpage, I'm going to write the mainpage, login/out, register. We are planning to deliver a rough solution of the webpages in two weeks. We will then combine them together to see what's needed next.
