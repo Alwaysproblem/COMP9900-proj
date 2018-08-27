@@ -1,2 +1,2 @@
-z5106189 week4
-We had meeting and made a rough plan, each of us is assigned a task of writing a webpage, I'm going to write the mainpage, login/out, register. We are planning to deliver a rough solution of the webpages in two weeks. We will then combine them together to see what's needed next.
+week5 working diary
+Working on the mainpage and login this week, finished part of it, need to be done by next weekend. Had a meeting with group member and discussed the progress, fixed minor bugs.
