@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% if title %}
+        <title>{{ title }} - Estate</title>
+        {% else %}
+        <title>Estate</title>
+        {% endif %}
+		<link href="{{url_for('static', filename='Estate.css')}}") rel="stylesheet">
+	</head>
+	<body>
+		<div class="mainpage_heading">
+		Estate: 
+		<a href="{{ url_for('mainpage') }}">Home</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+		</div>
+		</hr>
+
+	    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+		{% block body_contents %}
+		{% endblock %}
+	</body>
+</html>
