@@ -3,6 +3,7 @@ import os, re, sqlite3, uuid
 conn = sqlite3.connect('small.db',detect_types=sqlite3.PARSE_DECLTYPES,check_same_thread=False)
 
 def create_table():
+    conn.execute("drop table if exists users")
     conn.execute('''create table users (
                     ID int primary key not null,
                     userid char(50) not null,
@@ -15,10 +16,11 @@ def create_table():
                     home_suburb char(50));
                 ''')
 
+    conn.execute("drop table if exists hotel")
     conn.execute('''create table hotel (
                     ID int primary key not null,
                     hotelid char(50) not null,
-                    userid char(50) not null,
+                    userid char(50) ,
                     hotel char(50),
                     hotel_latitude char(50),
                     hotel_longitude char(50),
@@ -26,9 +28,12 @@ def create_table():
                     check_in_date char(50),
                     check_out_date char(50),
                     hotel_class char(50),
-                    guest_renting char(50));
+                    guest_renting char(50),
+                    room_type char(50),
+                    price int(50));
                     ''')
 
+    conn.execute("drop table if exists messages")
     conn.execute('''create table messages (
                     ID int primary key not null,
                     mid char(50) not null,
@@ -37,6 +42,7 @@ def create_table():
                     time char(50));
                 ''')
 
+    conn.execute("drop table if exists comments")
     conn.execute('''create table comments (
                    ID int primary key not null,
                    cid char(50) not null,
@@ -46,12 +52,3 @@ def create_table():
                    muserid char(50) not null,
                    time char(50));
                 ''')
-
-
-def load_hotel_info():
-    key += ', "' + match.group(1) + '"'
-    value += ', "' + match.group(2) + '"'
-    sql = 'insert into students (' + key + ') values (' + value + ')'
-# print(sql)
-    conn.execute(sql)
-    conn.commit()
