@@ -140,7 +140,7 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
 
 ##################Yongxi Part#################
 
-@app.route("/")
+# @app.route("/")
 @app.route("/show")
 def show():
     conn = sqlite3.connect("small.db")
