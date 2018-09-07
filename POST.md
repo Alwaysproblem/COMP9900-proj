@@ -6,7 +6,6 @@
     - suburb
     - street
     - coordinate (from google)
-    - 
 
 * room type (singal room/ doulble room)
 
