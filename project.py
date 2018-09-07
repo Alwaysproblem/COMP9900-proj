@@ -122,7 +122,6 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
         print(h_tuple)
 
     return placeholder, t_list
-    pass
 
 
 
