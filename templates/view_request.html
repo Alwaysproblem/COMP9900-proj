@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h5><a href="{{ url_for('requestList') }}" >Return</a></h5>
+</head>
+<body>
+    <h3>Aim address {{ request_address }}</h3>
+    <h3>Aim room amount {{ request_roomnum }}</h3>
+    <h3>Rent start date {{ request_start }}</h3>
+    <h3>Rent end date {{ request_end }}</h3>
+    <h3>{{ request_mesaage }}</h3>
+</body>
+</html>

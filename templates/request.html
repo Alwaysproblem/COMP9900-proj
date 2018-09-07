@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+    <head>
+        <h5><a href="{{ url_for('request_index') }}" >Return</a></h5>
+    </head>
+    <body>
+        <h3>Request</h3>
+        {% for request in request1 %}
+        <h5><a href="{{ url_for('view_request', title = request) }}">{{ request }}</a> </h5>
+        {% endfor %}
+    </body>
+</html>
