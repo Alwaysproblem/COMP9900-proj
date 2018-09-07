@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<script-->
+        <!--src="https://code.jquery.com/jquery-3.3.1.min.js"-->
+        <!--integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="-->
+        <!--crossorigin="anonymous"></script>-->
+   <!--<script>-->
+       <!--$(function(){ $("head").load("header.html") });-->
+   <!--</script>-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--  Optional JavaScript  -->
+    <!--  jQuery  -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <!--  datepicker ui  -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+    <!--  dropdown  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.sumoselect/3.0.2/sumoselect.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sumoselect/3.0.2/jquery.sumoselect.min.js"></script>
+</head>
+<body>
+
+
+<form id="searchform" action="search" method="post">
+    <div>
+        <p>Check in: <input id="datepicker1" type="text" class="form-control col-sm-2" placeholder="start date" name="check_in"></p>
+        <p>Check out: <input id="datepicker2" type="text" class="form-control col-sm-2" placeholder="end date" name="check_out"></p>
+    </div>
+    <input type="hidden" name="action" value="searchFriend">
+    <div>
+        <select multiple="multiple" placeholder="{{placeholder[0]}}" class="SlectBox" id="SlectBox1" name="hotelclass">
+            <option value="5">5 star</option>
+            <option value="4">4 star</option>
+            <option value="3">3 star</option>
+            <option value="2">0-2 star</option>
+        </select>
+
+        <select multiple="multiple" placeholder="{{placeholder[1]}}" class="SlectBox" id="SlectBox2" name="guestrenting">
+            <option value="5">5 star</option>
+            <option value="4">4 star</option>
+            <option value="3">3 star</option>
+            <option value="2">0-2 star</option>
+        </select>
+
+        <select multiple="multiple" placeholder="{{placeholder[2]}}" class="SlectBox" id="SlectBox3" name="roomtype">
+            <option value="Single">Single room</option>
+            <option value="Double">Double room</option>
+            <option value="Family">Family rooms</option>
+            <option value="Multiple">Multiple rooms</option>
+        </select>
+
+        <p>sort by<select multiple="multiple" placeholder="{{placeholder[3]}}" class="SlectBox" id="SlectBox4" name="sortchoice">
+            <option value="hotel_class">hotel class</option>
+            <option value="guest_renting">guest renting</option>
+            <option value="distance">distance</option>
+            <option value="price">price</option>
+        </select></p>
+    </div>
+    <div>
+        <button class="search-btn" type="submit" value="search"></button>
+        <!--<button class="search-btn" type="submit" value="Search">-->
+            <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
+        <!--</button>-->
+    </div>
+</form>
+
+
+
+
+<script>
+    // <!--  datepicker  -->
+    $( function() {
+            $( "#datepicker1" ).datepicker();
+        } );
+        $( function() {
+            $( "#datepicker2" ).datepicker();
+        } );
+
+    // <!--  dropdown  -->
+    $(document).ready(function () {
+            $('.SlectBox').SumoSelect({
+			csvDispCount: 3
+			});
+        });
+
+    // var MySelect;
+    // $(document).ready(function () {
+    //     MySelect = $('.SlectBox').SumoSelect();
+    //     alter(MySelect);
+    //  });
+    // var ip = $(this).parent().prev().prev().prev().prev().text();
+    // data_tmp = {'MySelect': MySelect, 'text': "success for ajax"}; // data to send to server.
+    // $.post('/js_call', data_tmp, function(data){alert(data)});
+
+</script>
+{% block body_contents %}
+{% endblock %}
+</body>
+</html>
+
