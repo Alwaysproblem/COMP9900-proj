@@ -1,9 +1,25 @@
 import os
-# import flask
 from flask import Flask, render_template, session, request, flash, jsonify, redirect, url_for
 import collections, operator, re, uuid, sqlite3
-# from Models import *
 from datetime import datetime
+
+######### Yongxi Part##########
+from form import PersonForm
+
+# app = Flask(__name__)
+# app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+
+def tupletodict(keys, tup):
+    return dict(zip(keys, tup))
+
+def comd_gen(Pform):
+    if Pform.Male.data is True:
+        cmd = f"INSERT INTO info VALUES (\"{Pform.Name.data}\", \"Male\", \"{Pform.Weight.data}kg\")"
+    elif Pform.Female.data is True:
+        cmd = f"INSERT INTO info VALUES (\"{Pform.Name.data}\", \"Female\", \"{Pform.Weight.data}kg\")"
+    return cmd
+
+######### Yongxi Part##########
 
 class dict2object(object):
     def __init__(self,map):
@@ -113,7 +129,6 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
     placeholder = [hotelplaceholder, guestplaceholder, roomplaceholder, sortchoice]
     sql = sql + hotelsearch + ' and '+ guestsearch + ' and ' + roomsearch + 'order by ' + sortchoice + ' desc'
     print(sql)
-    # return sql
 
     cur = query(sql)
     t_list = []
@@ -123,10 +138,39 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
 
     return placeholder, t_list
 
+##################Yongxi Part#################
+
+@app.route("/")
+@app.route("/show")
+def show():
+    conn = sqlite3.connect("small.db")
+    cur = conn.cursor()
+    keys = ["Name", "Gender", "Weight"]
+    info_tuples = cur.execute("""SELECT * FROM info;""")
+    posts = [tupletodict(keys, tup) for tup in info_tuples]
+    print(posts)
+    conn.close()
+    return render_template('show.html', posts=posts)
+
+
+@app.route("/add", methods=['GET', "POST"])
+def add():
+    AcForm = PersonForm()
+    if AcForm.validate_on_submit():
+        cmd_db = comd_gen(AcForm)
+        conn = sqlite3.connect("small.db")
+        cur = conn.cursor()
+        with conn:
+            cur.execute(cmd_db)
+        conn.close()
+        flash("the information is added", "success")
+        return redirect(url_for('show'))
+    return render_template('add.html', title='Add', form = AcForm)
+
+##################Yongxi Part#################
 
 
 if __name__ == '__main__':
-
     app.secret_key = os.urandom(12)
     app.run(debug=True)
     # print(load_search_result('2','2','mutl','price'))

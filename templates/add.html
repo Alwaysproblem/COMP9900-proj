@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!-- <h1>Post Accommodation</h1> -->
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Post Personal info</legend>
+                <div class="form-group">
+                    {{ form.Name.label(class="form-control-label") }}
+                    {% if form.Name.errors %}
+                        {{ form.Name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.Name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.Name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                        {{ form.Weight.label(class="form-control-label") }}
+                        {% if form.Weight.errors %}
+                            {{ form.Weight(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.Weight.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.Weight(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                <div class="form-check">
+                    {{ form.Male(class="form-check-input") }}
+                    {{ form.Male.label(class="form-check-label") }}
+                </div>
+                <div class="form-check">
+                        {{ form.Female(class="form-check-input") }}
+                        {{ form.Female.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+{% endblock content %}

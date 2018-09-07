@@ -52,6 +52,13 @@ def create_table():
                    muserid char(50) not null,
                    time char(50));
                 ''')
+                
+    with conn:
+        conn.execute("""CREATE TABLE IF NOT EXISTS Info (
+                    Name    varchar(20),
+                    Gender  varchar(20),
+                    Weigh   varchar(20)
+                    )""")
 
 
 def load_hotel_info():
