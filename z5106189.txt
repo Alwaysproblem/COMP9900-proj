@@ -1,2 +1,2 @@
-week5 working diary
-Working on the mainpage and login this week, finished part of it, need to be done by next weekend. Had a meeting with group member and discussed the progress, fixed minor bugs.
+Week 6 working diary
+Finished mainpage,user login,logout,register,need to meet the team to see what they need from my pages, planning to combine each others' code together so we could make some real progress.
