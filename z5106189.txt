@@ -1,2 +1,2 @@
-Week 6 working diary
-Finished mainpage,user login,logout,register,need to meet the team to see what they need from my pages, planning to combine each others' code together so we could make some real progress.
+Week 7 working diary
+Met with the team in the lab, we all have made some progress on our part of the work. However, we had some problems combining our code together. We are using different code structure and different database. We are trying to fix this in a few days.
