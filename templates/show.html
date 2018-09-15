@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body_contents %}
+    {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.UserEmail }}</a>
+              <small class="text-muted">{{ post.HouseID }}</small>
+              <!-- <small class="text-muted">{{ post.weight }}</small> -->
+            </div>
+            <h4><a class="article-title" href="#">{{ post.Price }} pw</a></h4>
+            <div class="article-metadata">
+              <p class="article-content">
+                {{ post.RoomNo }}/{{ post.Street }} {{ post.Suburb }} {{ post.State }} {{ post.Postcode }}
+                RoomType: {{post.RoomType}}
+                star Rating: {{post.Star}}
+                Available from {{post.CheckIn}} to {{post.CheckOut}}
+              </p>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock %}

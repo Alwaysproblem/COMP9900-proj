@@ -1,8 +1,6 @@
 import os
-# import flask
 from flask import Flask, render_template, session, request, flash, jsonify, redirect, url_for
 import collections, operator, re, uuid, sqlite3
-# from Models import *
 from datetime import datetime
 
 class dict2object(object):
@@ -113,7 +111,6 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
     placeholder = [hotelplaceholder, guestplaceholder, roomplaceholder, sortchoice]
     sql = sql + hotelsearch + ' and '+ guestsearch + ' and ' + roomsearch + 'order by ' + sortchoice + ' desc'
     print(sql)
-    # return sql
 
     cur = query(sql)
     t_list = []
@@ -122,12 +119,85 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
         print(h_tuple)
 
     return placeholder, t_list
-    pass
 
+##################Yongxi Part#################
+from form import PersonForm
+
+def tupletodict(keys, tup):
+    return dict(zip(keys, tup))
+
+def comd_gen(Pform):
+    UserEmail = Pform.UserEmail.data
+    HouseID = str(uuid.uuid4())
+    Rooms = Pform.Room.data.strip()
+    Streets = Pform.Street.data.strip()
+    Suburb = Pform.Suburb.data.strip()
+    State = Pform.State.data.strip()
+    Postcode = Pform.Postcode.data.strip()
+    RoomType = Pform.RoomType.data
+    Star = Pform.Star.data
+    CheckIn = Pform.check_in_date.data
+    CheckOut = Pform.check_out_date.data
+    Price = Pform.Price.data
+
+    cmd = f"""INSERT INTO hotel VALUES (
+                    "{UserEmail}",
+                    "{HouseID}",
+                    "{Rooms}",
+                    "{Streets}",
+                    "{Suburb}",
+                    "{State}",
+                    "{Postcode}",
+                    "{RoomType}",
+                    "{Star}",
+                    "{CheckIn}",
+                    "{CheckOut}",
+                    "{Price}"
+                )"""
+    return cmd
+
+@app.route("/show")
+def show():
+    conn = sqlite3.connect("small.db")
+    cur = conn.cursor()
+    keys = [
+        "UserEmail", 
+        "HouseID", 
+        "RoomNo",
+        "Street",
+        "Suburb",
+        "State",
+        "Postcode",
+        "RoomType",
+        "Star",
+        "CheckIn",
+        "CheckOut",
+        "Price"
+        ]
+    info_tuples = cur.execute("""SELECT * FROM hotel;""")
+    posts = [tupletodict(keys, tup) for tup in info_tuples]
+    conn.close()
+    return render_template('show.html', posts=posts)
+
+
+@app.route("/add", methods=['GET', "POST"])
+def add():
+    AcForm = PersonForm()
+    if AcForm.validate_on_submit():
+        cmd_db = comd_gen(AcForm)
+        conn = sqlite3.connect("small.db")
+        cur = conn.cursor()
+        with conn:
+            cur.execute(cmd_db)
+        conn.close()
+        flash("the information is added", "success")
+        return redirect(url_for('show'))
+    return render_template('add.html', title='Add', form = AcForm)
+
+##################Yongxi Part#################
 
 
 if __name__ == '__main__':
-
     app.secret_key = os.urandom(12)
     app.run(debug=True)
     # print(load_search_result('2','2','mutl','price'))
