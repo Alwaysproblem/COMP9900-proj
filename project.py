@@ -3,24 +3,6 @@ from flask import Flask, render_template, session, request, flash, jsonify, redi
 import collections, operator, re, uuid, sqlite3
 from datetime import datetime
 
-######### Yongxi Part##########
-from form import PersonForm
-
-# app = Flask(__name__)
-# app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-
-def tupletodict(keys, tup):
-    return dict(zip(keys, tup))
-
-def comd_gen(Pform):
-    if Pform.Male.data is True:
-        cmd = f"INSERT INTO info VALUES (\"{Pform.Name.data}\", \"Male\", \"{Pform.Weight.data}kg\")"
-    elif Pform.Female.data is True:
-        cmd = f"INSERT INTO info VALUES (\"{Pform.Name.data}\", \"Female\", \"{Pform.Weight.data}kg\")"
-    return cmd
-
-######### Yongxi Part##########
-
 class dict2object(object):
     def __init__(self,map):
         self.map = map
@@ -139,15 +121,61 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
     return placeholder, t_list
 
 ##################Yongxi Part#################
+from form import PersonForm
+
+def tupletodict(keys, tup):
+    return dict(zip(keys, tup))
+
+def comd_gen(Pform):
+    UserEmail = Pform.UserEmail.data
+    HouseID = str(uuid.uuid4())
+    Rooms = Pform.Room.data.strip()
+    Streets = Pform.Street.data.strip()
+    Suburb = Pform.Suburb.data.strip()
+    State = Pform.State.data.strip()
+    Postcode = Pform.Postcode.data.strip()
+    RoomType = Pform.RoomType.data
+    Star = Pform.Star.data
+    CheckIn = Pform.check_in_date.data
+    CheckOut = Pform.check_out_date.data
+    Price = Pform.Price.data
+
+    cmd = f"""INSERT INTO hotel VALUES (
+                    "{UserEmail}",
+                    "{HouseID}",
+                    "{Rooms}",
+                    "{Streets}",
+                    "{Suburb}",
+                    "{State}",
+                    "{Postcode}",
+                    "{RoomType}",
+                    "{Star}",
+                    "{CheckIn}",
+                    "{CheckOut}",
+                    "{Price}"
+                )"""
+    return cmd
 
 @app.route("/show")
 def show():
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
-    keys = ["Name", "Gender", "Weight"]
-    info_tuples = cur.execute("""SELECT * FROM info;""")
+    keys = [
+        "UserEmail", 
+        "HouseID", 
+        "RoomNo",
+        "Street",
+        "Suburb",
+        "State",
+        "Postcode",
+        "RoomType",
+        "Star",
+        "CheckIn",
+        "CheckOut",
+        "Price"
+        ]
+    info_tuples = cur.execute("""SELECT * FROM hotel;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
-    # print(posts)
     conn.close()
     return render_template('show.html', posts=posts)
 
