@@ -15,3 +15,6 @@ connected the front page with flask
 
 week 7:
 reorganised the whole project.
+
+week 8:
+merge the brunch merge_post to 9900
