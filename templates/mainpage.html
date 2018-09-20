@@ -2,19 +2,22 @@
 
 {% block body_contents %}
 <div class="mainpage_details">
-	<h1>Hi, {{ current_user.username }}!</h1>
+	{% if current_user.is_authenticated %}
+        <h1>Hi, {{ current_user.username }}!</h1>
+    {% endif %}
+	
 
-<form method="POST" action={{url_for('login')}}>
+<!-- <form method="POST" action={{url_for('login')}}>
 <input type="submit" value="login" class="mainpage_button">
 </form>
 
-<form method="POST" action={{url_for('sign_up')}}>
-<input type="submit" value="sign up" class="mainpage_button">
+<form method="POST" action={{url_for('register')}}>
+<input type="submit" value="register" class="mainpage_button">
 </form>
 
 <form method="POST" action={{url_for('search')}}>
 <input type="submit" value="search" class="mainpage_button">
-</form>
+</form> -->
 
 <img border="0" src={{picture_path}} alt='xD no photo' width="800" height="600">
 

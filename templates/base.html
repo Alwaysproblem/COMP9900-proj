@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Estate</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/navigation.css" type="text/css">
+    <script src="static/navigation.js" type="text/javascript"></script>
+    {% block beforehead %}
+    {% endblock %}
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <a class="navbar-left nav-title" 
+            href='{{ url_for( 'mainpage' ) }}';">Estate</a>
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li class="nav-btn">-->
+                    <!--<button class="btn btn-default navbar-btn btn-profile" onclick="{location.href='profile.jsp'}" style="outline: 0">Profile</button>-->
+                <!--</li>-->
+                <li class="nav-btn">
+                    <button class="btn btn-default navbar-btn btn-logout post"
+                    onclick="location.href='{{ url_for( 'search' ) }}';" 
+                    style="outline: 0">Search</button>
+                </li>
+                {% if current_user.is_anonymous %}
+                <li class="nav-btn">
+                    <button class="btn btn-default navbar-btn btn-logout post"
+                    onclick="location.href='{{ url_for( 'login' ) }}';"  
+                    style="outline: 0">Login</button>
+                </li>
+                {% else %}
+                <li class="nav-btn">
+                    <button class="btn btn-default navbar-btn btn-logout" 
+                    onclick="location.href='{{ url_for( 'logout' ) }}';" 
+                    style="outline: 0">Logout</button>
+                </li>
+                <li class="nav-btn">
+                    <button class="btn btn-default navbar-btn btn-logout post"
+                    onclick="location.href='{{ url_for( 'add' ) }}';"  
+                    style="outline: 0">Post Accommodation</button>
+                </li>
+                <li class="nav-btn">
+                    <button class="btn btn-default navbar-btn btn-logout post"
+                    onclick="location.href='{{ url_for( 'post' ) }}';"  
+                    style="outline: 0">Post Request</button>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+{% block body_contents %}
+{% endblock %}
+
+</body>
+</html>
