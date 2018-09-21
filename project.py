@@ -300,6 +300,73 @@ def add():
 
 ##################Yongxi End#################
 
+##################Zeng Start#################
+
+def getRequest():
+    conn = sqlite3.connect('small.db', detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
+    cur = conn.cursor()
+    keys = [
+        "ID",
+        "title",
+        "address",
+        "room_num",
+        "start_date",
+        "end_date",
+        "message"
+    ]
+    info_tuples = cur.execute("""SELECT * FROM requests;""")
+    posts = [tupletodict(keys, tup) for tup in info_tuples]
+    conn.close()
+    return posts
+
+
+@app.route('/request')
+def request_index():
+
+    return render_template('request_index.html')
+
+
+def load_requests(title, address, room_num, start_date, end_date, message):
+    conn = sqlite3.connect('small.db', detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
+    posts = getRequest()
+    count = 0
+    for _ in posts:
+        count = count + 1
+
+    sql = "insert into requests values ('" + str(count) + "','" + title + "','" + address + "', '" + room_num + "', '" + start_date + "','" + end_date + "','" + message + "','1') "
+    conn.execute(sql)
+    conn.commit()
+    pass
+
+
+@app.route('/post_request', methods=["GET", "POST"])
+def post_request():
+
+    if request.method == 'POST':
+        title = request.form["title"]
+        address = request.form["address"]
+        room_num = request.form["room_num"]
+        start_date = request.form["start_date"]
+        end_date = request.form["end_date"]
+        message = request.form["message"]
+        load_requests(title, address, room_num, start_date, end_date, message)
+        return redirect(url_for("request_index"))
+    else:
+        return render_template("post_request.html")
+
+
+@app.route('/requestList', methods=["GET", "POST"])
+def requestList():
+    posts = getRequest()
+    return render_template('request.html', request1=posts)
+
+
+@app.route('/view_quest/<string:title>')
+def view_request(title):
+    posts = getRequest()
+    return render_template('view_request.html', posts=posts, title1=title)
+
+##################Zeng End#################
 
 @app.route('/', methods =['GET','POST'])
 def init():
