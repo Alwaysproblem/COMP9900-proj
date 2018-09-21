@@ -3,6 +3,7 @@ body{
 	padding:0;
 	background:#fff;
 	font-family: 'Open Sans', sans-serif;
+	overflow: hidden;  /* get rid of the scroll slide */
  }
 h1,h2,h3,h4,h5,h6{
 	margin:0;	
@@ -18,14 +19,13 @@ ul{
 }
 
 .w3ls-banner{
-	width: 100%;
-	height: 110%;
-	background:url(../images/a.jpg)no-repeat 0px 0px;
+	background:url(../images/b.jpg)no-repeat 0px 0px;
+	height: 150%;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-position: center 0;
+	background-position: center center;
 }
 /*-- banner --*/
 input[type="submit"],.w3agile_contact_right_agileinfo p a,.w3_copy_right p a{
@@ -36,9 +36,10 @@ input[type="submit"],.w3agile_contact_right_agileinfo p a,.w3_copy_right p a{
 	-ms-transition:.5s all;
 }
 .center-container{
-	/* padding-bottom: 7.7%; */
-	padding: 0 0 8rem;
+	/* padding: 0 0 12em; */
+	/* padding: cover; */
 	background: rgba(0, 0, 0, 0.28);
+	/* background-size: cover; */
 } 
 .agileits-logo{
 	float:left;
