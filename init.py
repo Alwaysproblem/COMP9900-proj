@@ -51,6 +51,19 @@ def create_table():
                    muserid char(50) not null,
                    time char(50));
                 ''')
+    
+    conn.execute("drop table if exists requests")
+    conn.execute('''create table requests(
+                    ID int primary key not null,
+                    title char(50) not null,
+                    address char(50) not null,
+                    room_num int not null,
+                    start_date char(50) not null,
+                    end_date char(50) not null,
+                    message char(250) not null,
+                    user_id int );
+                ''')
+    
 
 
 if __name__ == '__main__':
