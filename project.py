@@ -322,7 +322,6 @@ def getRequest():
 
 @app.route('/request')
 def request_index():
-
     return render_template('request_index.html')
 
 
