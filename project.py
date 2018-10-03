@@ -225,7 +225,7 @@ def register():
 ############################彭霄汉end###############################
 ##################Yongxi start#################
 from form import PersonForm
-import datetime
+# import datetime
 import os
 from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -258,7 +258,7 @@ def comd_gen(Pform, Image_dir):
     picture.save(Image)
     Image = "../" + UPLOAD_FOLDER + '/' + filename
     # save post time
-    Post_time = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
+    Post_time = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.now())
 
 
     cmd = f"""INSERT INTO hotel VALUES (
@@ -486,7 +486,6 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
         print(h_tuple)
 
     return placeholder, t_list
-    pass
 
 @app.route('/post', methods = ['POST'])
 def post():
