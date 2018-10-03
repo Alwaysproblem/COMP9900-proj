@@ -225,11 +225,17 @@ def register():
 ############################彭霄汉end###############################
 ##################Yongxi start#################
 from form import PersonForm
+import datetime
+import os
+from flask import Flask, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'upload'
 
 def tupletodict(keys, tup):
     return dict(zip(keys, tup))
 
-def comd_gen(Pform):
+def comd_gen(Pform, Image_dir):
     UserEmail = Pform.UserEmail.data
     HouseID = str(uuid.uuid4())
     Rooms = Pform.Room.data.strip()
@@ -242,6 +248,18 @@ def comd_gen(Pform):
     CheckIn = Pform.check_in_date.data
     CheckOut = Pform.check_out_date.data
     Price = Pform.Price.data
+    Description = Pform.Description.data.strip()
+
+    # save the Image directory and Image data
+    picture = Pform.Image.data
+    filename = secure_filename(picture.filename)
+    cur_dir = os.getcwd()
+    Image = os.path.join(cur_dir, Image_dir, filename)
+    picture.save(Image)
+    Image = "../" + UPLOAD_FOLDER + '/' + filename
+    # save post time
+    Post_time = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
+
 
     cmd = f"""INSERT INTO hotel VALUES (
                     "{UserEmail}",
@@ -255,9 +273,38 @@ def comd_gen(Pform):
                     "{Star}",
                     "{CheckIn}",
                     "{CheckOut}",
-                    "{Price}"
+                    "{Price}",
+                    "{Description}",
+                    "{Image}",
+                    "{Post_time}"
                 )"""
     return cmd
+
+@app.route("/showAll")
+def showAll():
+    conn = sqlite3.connect("small.db")
+    cur = conn.cursor()
+    keys = [
+        "UserEmail", 
+        "HouseID", 
+        "RoomNo",
+        "Street",
+        "Suburb",
+        "State",
+        "Postcode",
+        "RoomType",
+        "Star",
+        "CheckIn",
+        "CheckOut",
+        "Price",
+        "Description",
+        "Image",
+        "Post_time"
+        ]
+    info_tuples = cur.execute("""SELECT * FROM hotel;""")
+    posts = [tupletodict(keys, tup) for tup in info_tuples]
+    conn.close()
+    return render_template('show.html', posts=posts)
 
 @app.route("/show")
 def show():
@@ -275,9 +322,12 @@ def show():
         "Star",
         "CheckIn",
         "CheckOut",
-        "Price"
+        "Price",
+        "Description",
+        "Image",
+        "Post_time"
         ]
-    info_tuples = cur.execute("""SELECT * FROM hotel;""")
+    info_tuples = cur.execute("""SELECT * FROM hotel order by Post_time desc limit 1;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
     conn.close()
     return render_template('show.html', posts=posts)
@@ -287,8 +337,7 @@ def show():
 def add():
     AcForm = PersonForm()
     if AcForm.validate_on_submit():
-        print("fuck")
-        cmd_db = comd_gen(AcForm)
+        cmd_db = comd_gen(AcForm, UPLOAD_FOLDER)
         conn = sqlite3.connect("small.db")
         cur = conn.cursor()
         with conn:
@@ -444,7 +493,6 @@ def post():
     pass
 
 if __name__ == '__main__':
-
     app.secret_key = os.urandom(12)
     app.run(debug=True)
     # print(load_search_result('2','2','mutl','price'))

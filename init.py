@@ -29,7 +29,11 @@ def create_table():
                     Star char(50),
                     check_in_date char(50),
                     check_out_date char(50),
-                    price int(50));
+                    price int(50),
+                    description char(255),
+                    Image char(50),
+                    post_time char(50)
+                    );
                     ''')
 
     conn.execute("drop table if exists messages")
@@ -51,7 +55,7 @@ def create_table():
                    muserid char(50) not null,
                    time char(50));
                 ''')
-    
+
     conn.execute("drop table if exists requests")
     conn.execute('''create table requests(
                     ID int primary key not null,
@@ -63,7 +67,6 @@ def create_table():
                     message char(250) not null,
                     user_id int );
                 ''')
-    
 
 
 if __name__ == '__main__':

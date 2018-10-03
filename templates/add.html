@@ -2,7 +2,7 @@
 {% block body_contents %}
     <!-- <h1>Post Accommodation</h1> -->
     <div class="content-section">
-        <form method="POST" action="">
+        <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Post Personal info</legend>
@@ -130,6 +130,32 @@
                         </div>
                     {% else %}
                         {{ form.Price(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.Description.label(class="form-control-label") }}
+                    {% if form.Description.errors %}
+                        {{ form.Description(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.Description.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.Description(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group" >
+                    {{ form.Image.label(class="form-control-label") }}
+                    {% if form.Image.errors %}
+                        {{ form.Image(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.Image.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.Image(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
             </fieldset>
