@@ -2,70 +2,72 @@
 <html lang="en">
 <head>
     <title>Estate</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="static/navigation.css" type="text/css">
-    <script src="static/navigation.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="css/smoothbox.css" type='text/css' >
+    <script src="js/jquery.min.js"></script>
+
+    <link href="http://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
     {% block beforehead %}
     {% endblock %}
 </head>
 <body>
 
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse">
-            <a class="navbar-left nav-title" 
-            href='{{ url_for( 'mainpage' ) }}';">Estate</a>
-            <ul class="nav navbar-nav navbar-right">
-                <!--<li class="nav-btn">-->
-                    <!--<button class="btn btn-default navbar-btn btn-profile" onclick="{location.href='profile.jsp'}" style="outline: 0">Profile</button>-->
-                <!--</li>-->
-                <li class="nav-btn">
-                    <button class="btn btn-default navbar-btn btn-logout post"
-                    onclick="location.href='{{ url_for( 'search' ) }}';" 
-                    style="outline: 0">Search</button>
-                </li>
-                {% if current_user.is_anonymous %}
-                <li class="nav-btn">
-                    <button class="btn btn-default navbar-btn btn-logout post"
-                    onclick="location.href='{{ url_for( 'login' ) }}';"  
-                    style="outline: 0">Login</button>
-                </li>
-                {% else %}
-                <li class="nav-btn">
-                    <button class="btn btn-default navbar-btn btn-logout" 
-                    onclick="location.href='{{ url_for( 'logout' ) }}';" 
-                    style="outline: 0">Logout</button>
-                </li>
-                <li class="nav-btn">
-                    <button class="btn btn-default navbar-btn btn-logout post"
-                    onclick="location.href='{{ url_for( 'add' ) }}';"  
-                    style="outline: 0">Post Accommodation</button>
-                </li>
-                <li class="nav-btn">
-                    <button class="btn btn-default navbar-btn btn-logout post"
-                    onclick="location.href='{{ url_for( 'request_index' ) }}';"  
-                    style="outline: 0">Post Request</button>
-                </li>
-                {% endif %}
-            </ul>
+<body>
+    <div class="w3ls-banner">
+        <div class="center-container">
+            <div class="navigation">
+                <div class="container">
+                    <div class="agileits-logo">
+                        {% if current_user.is_authenticated %}
+                        <h1><a href="/mainpage">Estate<span class="w3agile" class=navigation-right>Welcome {{current_user.username}}</span></a></h1>
+                        {% else %}
+                         <h1><a href="/mainpage">Estate<span class="w3agile" navigation-right>Offer you the best experience~Just like home</span></a></h1>
+                        {% endif %}
+                    </div>
+                    <div class="navigation-right">
+                        <span class="menu"><img src="images/menu.png" alt=" " /></span>
+                        <nav class="link-effect-3" id="link-effect-3">
+                            <ul class="nav1 nav">
+                                <li><a data-hover="Search" href="/mainpage">Search</a></li>
+                                
+                                {% if current_user.is_anonymous %}
+                                <li><a href="/login" class="scroll" data-hover="Agents">Login</a></li>
+                                {% else %}
+                                <li><a href="/add" class="scroll" data-hover="About">Post accomendation</a></li>
+                                
+                                <li><a href="/request_index" class="scroll" data-hover="Agents">Post request</a></li>
+                                
+                                <li><a href="/personal_website" class="scroll" data-hover="Agents"> Personalwebsite</a></li>
+                                <li><a href="/edit_profile" class="scroll" data-hover="Agents"> Edit Profile</a></li>
+                                <li><a href="/logout" class="scroll" data-hover="Agents">Logout</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
         </div>
-    </div>
-</nav>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
+            <div class="container" style="margin-left: 30%;margin-top: 3%">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li style="color: yellow; padding-bottom: 20px">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
 
-{% block body_contents %}
-{% endblock %}
+    {% block body_contents %}
+    {% endblock %}
 
-</body>
-</html>
+        </div>
+
+    </body>
+    </html>
