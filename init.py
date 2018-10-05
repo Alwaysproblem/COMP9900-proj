@@ -18,6 +18,7 @@ def create_table():
 
     conn.execute("drop table if exists hotel")
     conn.execute('''create table hotel (
+                    userid char(50),
                     useremail char(50),
                     HouseID char(50) primary key not null,
                     RoomNo char(50),

@@ -366,6 +366,7 @@ def tupletodict(keys, tup):
 
 
 def comd_gen(Pform, Image_dir):
+    Userid = current_user.id
     UserEmail = Pform.UserEmail.data
     HouseID = str(uuid.uuid4())
     Rooms = Pform.Room.data.strip()
@@ -391,6 +392,7 @@ def comd_gen(Pform, Image_dir):
     Post_time = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.now())
 
     cmd = f"""INSERT INTO hotel VALUES (
+        "{Userid}",
         "{UserEmail}",
         "{HouseID}",
         "{Rooms}",
@@ -415,6 +417,7 @@ def showAll():
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
     keys = [
+        "UserID",
         "UserEmail",
         "HouseID",
         "RoomNo",
@@ -439,9 +442,11 @@ def showAll():
 
 @app.route("/show")
 def show():
+    print(current_user.ID)
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
     keys = [
+        "UserID",
         "UserEmail",
         "HouseID",
         "RoomNo",
