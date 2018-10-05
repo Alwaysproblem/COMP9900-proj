@@ -582,7 +582,7 @@ def load_comment(comment, requestID):
     pass
 
 
-@app.route('/view_quest/<string:requestID>', methods=["GET", "POST"])
+@app.route('/view_request/<string:requestID>', methods=["GET", "POST"])
 def view_request(requestID):
     posts = getRequest()
     if request.method == 'POST':

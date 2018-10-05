@@ -1,7 +1,0 @@
-{% extends "base.html" %}
-{% block body_contents %}
-        <h3>Request</h3>
-        {% for request in request1 %}
-            <h5><a href="{{ url_for('view_request', title = request.title) }}">{{ request.title }}</a></h5>
-        {% endfor %}
-{% endblock %}
