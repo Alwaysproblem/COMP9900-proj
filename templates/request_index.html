@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<br>
+{% extends "base.html" %}
+{% block body_contents %}
     <h3>Request</h3>
     <a href="{{ url_for('post_request') }}"> Post request</a></br>
-    <a href="{{ url_for('requestList') }}"> Requests</a></br>
-</body>
-</html>
+        {% for request in request1 %}
+            <h5><a href="{{ url_for('view_request', requestID = request.ID) }}">{{ request.title }}</a></h5>
+        {% endfor %}
+{% endblock %}

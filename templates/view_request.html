@@ -1,25 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h5><a href="{{ url_for('requestList') }}" >Return</a></h5>
-</head>
-<body>
+{% extends "base.html" %}
+{% block body_contents %}
     {% for post in posts %}
-        {% if title1 == post.title %}
+        {% if requestID == post.ID | string %}
     <h3>Aim address {{ post.address }}</h3>
     <h3>Aim room amount {{ post.room_num }}</h3>
     <h3>Rent start date {{ post.start_date }}</h3>
     <h3>Rent end date {{ post.end_date }}</h3>
     <h3>{{ post.message }}</h3>
+            </br>
+            <h3>Comments</h3>
+            {% for comment in comments %}
+            {% if comment.requestID == post.ID  %}
+            <h3>{{ comment.message }}</h3>
+                {% endif %}
+            {% endfor %}
+        <form method="POST">
+            <fieldset>
+                <textarea placeholder="Type your Comment Here...." name = "comment" tabindex="5" required></textarea>
+            </fieldset>
+            <fieldset>
+                <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+            </fieldset>
+        </form>
         {% endif %}
     {% endfor %}
-    <fieldset>
-      <textarea placeholder="Type your Message Here...." name = "message" tabindex="5" required></textarea>
-    </fieldset>
-    <fieldset>
-      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
-    </fieldset>
-</body>
-</html>
+{% endblock %}
