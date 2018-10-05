@@ -48,11 +48,9 @@ def create_table():
     conn.execute("drop table if exists comments")
     conn.execute('''create table comments (
                    ID int primary key not null,
-                   cid char(50) not null,
-                   mid char(50) not null,
                    message char(50),
-                   userid char(50) not null,
-                   muserid char(50) not null,
+                   requestID int not null,
+                   userID char(50) not null,
                    time char(50));
                 ''')
 
