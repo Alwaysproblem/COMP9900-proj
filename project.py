@@ -5,7 +5,6 @@ import collections, operator, re, uuid, sqlite3
 # from Models import *
 from datetime import datetime
 
-
 #############################彭霄汉start###############################
 #1.userid -> username
 #2.route / 
@@ -16,6 +15,7 @@ from datetime import datetime
 # from flask import render_template, flash, redirect, request, url_for
 # from app.forms import LoginForm, RegistrationForm
 import uuid
+from flask_bootstrap import Bootstrap
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager, UserMixin
 from werkzeug.urls import url_parse
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -65,6 +65,15 @@ def insert(sql):
     conn.commit()
     conn.close()
 
+def update(sql):
+    conn = sqlite3.connect('small.db', detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
+    cur = conn.cursor()
+    print(sql)
+    cur.execute(sql)
+    cur.close()
+    conn.commit()
+    conn.close()
+
 def current_time():
     now = datetime.now()
     current_time = now.strftime('%Y-%m-%dT%H:%M:%S+0000')
@@ -73,6 +82,7 @@ app = Flask(__name__, static_folder='', static_url_path='')
 
 #############################彭霄汉start###############################
 login = LoginManager(app)
+Bootstrap = Bootstrap(app)
 login.login_view = 'login'
 
 
@@ -83,8 +93,8 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Account Name', validators=[DataRequired()])
+    email = StringField('Email Address', validators=[DataRequired(), Email()])
     full_name = StringField('Full Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
@@ -93,33 +103,65 @@ class RegistrationForm(FlaskForm):
 
     def validate_username(self, username):
         sql = 'select username from users'
-        cur = query(sql)#Cursor object
+        cur = query(sql)
         res = cur.fetchall()
         if (username.data,) in res:
-            raise ValidationError('Please use a different username.')
-
-        
-        # user = User.query.filter_by(username=username.data).first()
-        # if user is not None:
-            # raise ValidationError('Please use a different username.')
+            raise ValidationError('Please use a different account name.')
 
     def validate_email(self, email):
         sql = 'select email from users'
-        cur = query(sql)#Cursor object
-        if email.data in cur.fetchall():
-        # user = User.query.filter_by(email=email.data).first()
-        # if user is not None:
+        cur = query(sql)
+        res = cur.fetchall()
+        if (email.data,) in res:
+            raise ValidationError('Please use a different email address.')
+    
+class Profile_edit_Form(FlaskForm):
+
+    username = StringField('Update Account Name',\
+                render_kw={'placeholder': 'current_user.username'})
+
+    email = StringField('Update Email Address',\
+                render_kw={'placeholder': 'current_user.email'})
+
+    full_name = StringField('Update Full Name',\
+                render_kw={'placeholder': 'current_user.full_name'})
+
+    home_suburb = StringField('Home Suburb (optional)')
+
+    home = StringField('Home address (optional)')
+
+    password = PasswordField('New Password')
+
+    password2 = PasswordField(
+        'Repeat Password', validators=[EqualTo('password')])
+
+    submit = SubmitField('Update Profile')
+
+    def validate_username(self, username):
+        sql = 'select username from users'
+        cur = query(sql)
+        res = cur.fetchall()
+        res.remove((current_user.username,))
+        if (username.data,) in res:
+            raise ValidationError('Please use a different account name.')
+
+    def validate_email(self, email):
+        sql = 'select email from users'
+        cur = query(sql)
+        res = cur.fetchall()
+        res.remove((current_user.email,))
+        if (email.data,) in res:
             raise ValidationError('Please use a different email address.')
 
 
+sql = 'select ID from users order by ID DESC limit 1'
+cur = query(sql)
+res = cur.fetchall()
+if len(res) > 0:
+    Usercount = res[0][0]
+else:
+    Usercount = 1
 class User(UserMixin):
-    sql = 'select ID from users order by ID DESC limit 1'
-    cur = query(sql)
-    res = cur.fetchall()
-    if len(res) > 0:
-        Usercount = res[0][0]
-    else:
-        Usercount = 0
     id = Usercount
     def __init__(self, Username):
         self.username = None
@@ -128,6 +170,7 @@ class User(UserMixin):
         res = cur.fetchall()
         if len(res) == 1:
             self.ID = res[0][0]
+            User.id = self.ID
             self.username = res[0][1]
             self.password_hash = res[0][2] 
             self.full_name = res[0][3]
@@ -139,8 +182,8 @@ class User(UserMixin):
 
     def add_user(self,Username, Password, Full_name, Email,\
      Home = 'None', Home_latitude = 'None', Home_longitude = 'None', Home_suburb = 'None'):
-
-        User.Usercount += 1
+        global Usercount
+        Usercount += 1
         password_hash = generate_password_hash(Password)
 
         key = '"ID", "username", "password_hash", "full_name", "email", \
@@ -150,8 +193,22 @@ class User(UserMixin):
         # Home, Home_latitude, Home_longitude, Home_suburb'
 
         sql = "insert into users (" + key + ") values ({},'{}','{}','{}','{}','{}','{}','{}','{}')".format\
-        (User.Usercount, Username, password_hash, Full_name, Email, Home, Home_latitude, Home_longitude, Home_suburb)
+        (Usercount, Username, password_hash, Full_name, Email, Home, Home_latitude, Home_longitude, Home_suburb)
         insert(sql)
+
+    def update_user(self,Username, Password, Full_name, Email,\
+                    Home, Home_suburb, New_password, Home_latitude = 'None', Home_longitude = 'None'):
+        if(New_password):
+            password_hash = generate_password_hash(Password)
+        else:
+            password_hash = Password
+
+        sql = 'UPDATE users SET username = "' + Username + '", password_hash = "' + password_hash + '",\
+        full_name = "' + Full_name + '", email = "' + Email + '", home = "' + Home + '",\
+        home_suburb = "' + Home_suburb + '" WHERE ID = ' + str(current_user.ID)
+
+        update(sql)
+
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -165,15 +222,13 @@ def load_user(id):
     sql = 'select * from users where ID = ' + str(id)
     cur = query(sql)
     res = cur.fetchall()
-    print(id)
-    print(res)
-    return res[0]
-    # return User.query.get(int(id))
+    user = User(res[0][1])
+    return user
 
 
-# @app.route('/', methods=['GET','POST'])
-@app.route('/mainpage', methods=['GET','POST'])
-# @login_required 
+@app.route('/', methods=['GET','POST'])
+@app.route('/index', methods=['GET','POST'])
+@app.route('/mainpage', methods=['GET','POST']) 
 def mainpage():
     p_path = os.path.join('static','pictures','background','4.jpg')
 
@@ -182,12 +237,11 @@ def mainpage():
     # sql = 'insert into users (' + key + ') values (' + value + ')'
     # insert(sql)
 
-    # sql = 'select * from users'
-    # cur = query(sql)
-    # res = cur.fetchall()
-    # for i in res:
-    #     print(i)
-
+    sql = 'select * from users'
+    cur = query(sql)
+    res = cur.fetchall()
+    for i in res:
+        print(i)
     return render_template('mainpage.html', picture_path=p_path)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -222,6 +276,63 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    if current_user.is_anonymous:
+        return redirect(url_for('login'))
+
+    current = {
+        'username':current_user.username,
+        'full_name':current_user.full_name,
+        'email':current_user.email,
+        'home':current_user.home,
+        'home_suburb':current_user.home_suburb,
+        'password':current_user.password_hash
+    }
+    new_password = 0
+    form = Profile_edit_Form()
+    print('before')
+    if form.validate_on_submit():
+        print('submit')
+        update = {
+            'username':form.username.data,
+            'full_name':form.full_name.data, 
+            'email':form.email.data,
+            'home':form.home.data,
+            'home_suburb':form.home_suburb.data,
+            'password':form.password.data
+        }
+        L=['', '', '', '', '', '']
+        if(list(update.values()) == L):
+            flash('Please fill in the form to update your profile.')
+            return redirect(url_for('edit_profile'))
+        else:
+            for i in range(len(update.values()) - 1):
+                # if the input data is different from the current and input data is not empty:
+                # update information except for password
+                if (list(update.values())[i] != list(current.values())[i] and len(list(update.values())[i]) > 0):
+                    current[list(current.keys())[i]] = update[list(update.keys())[i]]
+            #if the user input none-empty password and is not using the same old password:
+            if(len(form.password.data) > 0 and not current_user.check_password(form.password.data)):
+                current['password'] = update['password']
+                new_password = 1
+            #elif the user filled the old same password in the form:
+            elif(current_user.check_password(form.password.data)):
+                flash('Password is same as the current one, please use a different password.')
+                return redirect(url_for('edit_profile'))
+
+            current_user.update_user(current['username'], current['password'],\
+            current['full_name'], current['email'], current['home'], current['home_suburb'],new_password)
+            flash('User profile update was successful.')
+        
+        if(len(update['password']) > 0 or len(update['username']) > 0):
+            flash('Please sign in with your new account name and password.')
+            logout_user()
+            return redirect(url_for('login'))
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+
 ############################彭霄汉end###############################
 ##################Yongxi start#################
 from form import PersonForm
@@ -249,7 +360,7 @@ def comd_gen(Pform, Image_dir):
     CheckOut = Pform.check_out_date.data
     Price = Pform.Price.data
     Description = Pform.Description.data.strip()
-
+    
     # save the Image directory and Image data
     picture = Pform.Image.data
     filename = secure_filename(picture.filename)
@@ -259,25 +370,25 @@ def comd_gen(Pform, Image_dir):
     Image = "../" + UPLOAD_FOLDER + '/' + filename
     # save post time
     Post_time = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.now())
-
-
+    
+    
     cmd = f"""INSERT INTO hotel VALUES (
-                    "{UserEmail}",
-                    "{HouseID}",
-                    "{Rooms}",
-                    "{Streets}",
-                    "{Suburb}",
-                    "{State}",
-                    "{Postcode}",
-                    "{RoomType}",
-                    "{Star}",
-                    "{CheckIn}",
-                    "{CheckOut}",
-                    "{Price}",
-                    "{Description}",
-                    "{Image}",
-                    "{Post_time}"
-                )"""
+        "{UserEmail}",
+        "{HouseID}",
+        "{Rooms}",
+        "{Streets}",
+        "{Suburb}",
+        "{State}",
+        "{Postcode}",
+        "{RoomType}",
+        "{Star}",
+        "{CheckIn}",
+        "{CheckOut}",
+        "{Price}",
+        "{Description}",
+        "{Image}",
+        "{Post_time}"
+        )"""
     return cmd
 
 @app.route("/showAll")
@@ -285,22 +396,22 @@ def showAll():
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
     keys = [
-        "UserEmail", 
-        "HouseID", 
-        "RoomNo",
-        "Street",
-        "Suburb",
-        "State",
-        "Postcode",
-        "RoomType",
-        "Star",
-        "CheckIn",
-        "CheckOut",
-        "Price",
-        "Description",
-        "Image",
-        "Post_time"
-        ]
+            "UserEmail",
+            "HouseID",
+            "RoomNo",
+            "Street",
+            "Suburb",
+            "State",
+            "Postcode",
+            "RoomType",
+            "Star",
+            "CheckIn",
+            "CheckOut",
+            "Price",
+            "Description",
+            "Image",
+            "Post_time"
+            ]
     info_tuples = cur.execute("""SELECT * FROM hotel;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
     conn.close()
@@ -311,22 +422,22 @@ def show():
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
     keys = [
-        "UserEmail", 
-        "HouseID", 
-        "RoomNo",
-        "Street",
-        "Suburb",
-        "State",
-        "Postcode",
-        "RoomType",
-        "Star",
-        "CheckIn",
-        "CheckOut",
-        "Price",
-        "Description",
-        "Image",
-        "Post_time"
-        ]
+            "UserEmail",
+            "HouseID",
+            "RoomNo",
+            "Street",
+            "Suburb",
+            "State",
+            "Postcode",
+            "RoomType",
+            "Star",
+            "CheckIn",
+            "CheckOut",
+            "Price",
+            "Description",
+            "Image",
+            "Post_time"
+            ]
     info_tuples = cur.execute("""SELECT * FROM hotel order by Post_time desc limit 1;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
     conn.close()
@@ -346,7 +457,6 @@ def add():
         flash("the information is added", "success")
         return redirect(url_for('show'))
     return render_template('add.html', title='Add', form = AcForm)
-
 ##################Yongxi End#################
 
 ##################Zeng Start#################
@@ -416,10 +526,10 @@ def view_request(title):
 
 ##################Zeng End#################
 
-@app.route('/', methods =['GET','POST'])
-def init():
-    placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice']
-    return render_template('noresult.html', placeholder = placeholder)
+# @app.route('/', methods =['GET','POST'])
+# def init():
+#     placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice']
+#     return render_template('noresult.html', placeholder = placeholder)
 
 @app.route('/search', methods = ['POST'])
 def search():
@@ -486,12 +596,14 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
         print(h_tuple)
 
     return placeholder, t_list
+    pass
 
 @app.route('/post', methods = ['POST'])
 def post():
     pass
 
 if __name__ == '__main__':
+
     app.secret_key = os.urandom(12)
     app.run(debug=True)
     # print(load_search_result('2','2','mutl','price'))

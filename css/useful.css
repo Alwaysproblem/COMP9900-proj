@@ -1,0 +1,110 @@
+.w3ls-banner{
+	background:url(../images/a.jpg)no-repeat 0px 0px;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+}
+.center-container{
+	padding:0em 0 8em;
+	background: rgba(0, 0, 0, 0.28);
+}
+
+.navigation-right{
+	float:right;
+	margin: 0.8em 0 0;
+}
+.navigation-right ul li{
+	display:inline-block;
+}
+.navigation-right ul li a{
+	color:#fff;
+    font-size:1em;
+    text-decoration: none;
+    padding: 10px 0;
+	text-transform:uppercase;
+	-webkit-transition:.5s all;
+	-moz-transition:.5s all;
+	-o-transition:.5s all;
+	-ms-transition:.5s all;
+	transition:.5s all;
+}
+.navigation-right ul li.active a,.navigation-right ul li a:hover {
+	color:#E91E63;
+}
+.navigation {
+    padding:1em 0;
+    background:rgba(0, 0, 0, 0.53);
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: 40%;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+.w3l_banner_logo{
+	width: 100px;
+    height: 100px;
+    border: 1px solid #fff;
+    margin: 0 auto;
+    transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	text-align: center;
+}
+.w3l_banner_logo h2 {
+    font-size: 4em;
+    color: #fff;
+    line-height: 1;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 200;
+    margin-top: 0.4em;
+}
+.w3ls_banner_info h3{
+	margin: 2em 0;
+    font-size: 2em;
+    color:#fff;
+    text-transform: uppercase;
+    line-height: 1.5em;
+    padding-bottom: 1em;
+    position: relative;
+    font-family: 'Open Sans', sans-serif;
+}
+.w3ls_banner_info h3:after{
+	content:'';
+	background:#20e6ff;
+	height:1px;
+	width:30%;
+	position:absolute;
+	bottom:0%;
+	left:34%;
+}
+.w3ls_banner_info p{
+	color:#fff;
+	line-height:1.8em;
+	margin-bottom:5em;
+}
