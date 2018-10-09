@@ -595,67 +595,122 @@ def view_request(requestID):
 
 ##################Zeng End#################
 
-# @app.route('/', methods =['GET','POST'])
-# def init():
-#     placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice']
-#     return render_template('noresult.html', placeholder = placeholder)
+@app.route('/search_init', methods =['GET','POST'])
+def search_init():
+    sql = 'select * from hotel'
+    print(sql)
+    cur = query(sql)
+    t_list = []
+    for h_tuple in cur.fetchall():
+        t_list.append(h_tuple)
+        print(h_tuple)
+    print(t_list)
+    placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice']
+    return render_template('noresult.html', placeholder = placeholder)
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods = ['POST'])
 def search():
-    hotelclass = request.form.get('hotelclass')
-    guestrenting = request.form.get('guestrenting')
-    roomtype = request.form.get('roomtype')
-    sortchoice = request.form.get('sortchoice')
-    check_in = request.form.get('check_in')
-    check_out = request.form.get('check_out')
-    print(check_in)
-    # result_list = []
-    placeholder, result_list = load_search_result(hotelclass, guestrenting, roomtype, sortchoice)
-    if result_list == []:
-        return render_template('noresult.html')
-    return render_template('search_result.html', placeholder=placeholder, results=result_list)
+    sql = 'select * from hotel'
+    print(sql)
+    cur = query(sql)
+    t_list = []
+    for h_tuple in cur.fetchall():
+        t_list.append(h_tuple)
+        print(h_tuple)
+    print(t_list)
 
+    Star = request.form.get('hotelclass')
+    # guestrenting = request.form.get('guestrenting')
+    RoomType = request.form.get('roomtype')
+    sortchoice = request.form.get('sortchoice')
+    check_in_date = request.form.get('check_in')
+    check_out_date = request.form.get('check_out')
+    print(check_in_date)
+    # result_list = []
+    placeholder, result_list = load_search_result(Star, RoomType, sortchoice, check_in_date, check_out_date)
+    if result_list == []:
+        return render_template('noresult.html', placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice'])
+    return render_template('search_result.html', placeholder = placeholder, results = result_list)
 
 # @app.route('/search_result', methods = ['POST'])
 # def search_result():
 #     return render_template('search_result.html')
 
-def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
+@app.route('/detail', methods = ['GET','POST'])
+def detail():
+    house_id = request.args.get('id')
+    house_detail = load_house_info(house_id)
+    # print(house_id)
+    return render_template('house_detail.html', house_detail = house_detail)
+
+
+@app.route('/booking', methods = ['GET','POST'])
+def booking():
+    house_id = request.args.get('id')
+    print(house_id)
+    return render_template('booking_house.html')
+
+def load_house_info(id):
+    sql = 'select * from hotel where HouseID = "' + id + '"'
+    cur = query(sql)
+    h_tuple = cur.fetchone()
+    # print(h_tuple)
+    return h_tuple
+
+def load_search_result(Star, RoomType, sortchoice, check_in_date, check_out_date):
     # sql = 'select * from hotel where hotel_class="' + detail + '"'
     sql = 'select * from hotel where '
     temp = ''
     hotelplaceholder = ''
-    if operator.eq(hotelclass, None):
-        hotelsearch = 'hotel_class != -1'
-        hotelplaceholder = 'hotel class'
-    elif operator.eq(hotelclass, '2'):
-        hotelsearch = '(hotel_class = 2 or hotel_class = 1 or hotel_class = 0)'
+    if operator.eq(Star, None):
+        hotelsearch = 'Star != -1'
+        hotelplaceholder = 'Star'
+    elif operator.eq(Star,'2'):
+        hotelsearch = '(Star = 2 or Star = 1 or Star = 0)'
         hotelplaceholder = '0-2 starts'
     else:
-        hotelsearch = 'hotel_class =' + hotelclass
-        hotelplaceholder = hotelclass + ' starts'
+        hotelsearch = 'Star =' + Star
+        hotelplaceholder = Star+ ' starts'
 
     guestsearch = ''
-    if operator.eq(guestrenting, None):
-        guestsearch = 'guest_renting != -1'
-        guestplaceholder = 'guest renting'
-    elif operator.eq(guestrenting, '2'):
-        guestsearch = '(guest_renting = 2 or guest_renting = 1 or guest_renting = 0)'
-        guestplaceholder = '0-2 starts'
-    else:
-        guestsearch = 'guest_renting = ' + guestrenting
-        guestplaceholder = guestrenting + ' starts'
+    # if operator.eq(guestrenting, None):
+    #     guestsearch = 'guest_renting != -1'
+    #     guestplaceholder = 'guest renting'
+    # elif operator.eq(guestrenting,'2'):
+    #     guestsearch = '(guest_renting = 2 or guest_renting = 1 or guest_renting = 0)'
+    #     guestplaceholder = '0-2 starts'
+    # else:
+    #     guestsearch = 'guest_renting = ' + guestrenting
+    guestplaceholder = 'guest renting'
 
     roomsearch = ''
-    if operator.eq(roomtype, None):
-        roomsearch = 'room_type != "None"'
+    if operator.eq(RoomType, None):
+        roomsearch = 'RoomType != "None"'
         roomplaceholder = 'room type'
     else:
-        roomsearch = 'room_type= "' + roomtype + '"'
-        roomplaceholder = 'room type' + ' room'
+        roomsearch = 'RoomType= "' + RoomType + '"'
+        roomplaceholder = 'RoomType' + ' room'
+
+    sortsearch = ''
+    if operator.eq(sortchoice, None):
+        sortsearch = 'Star'
+    else:
+        sortsearch = sortchoice
+
+    check_in_search = ''
+    if operator.eq(check_in_date, ''):
+        check_in_search = 'check_in_date > ""'
+    else:
+        check_in_search = 'check_in_date < ' + check_in_date
+
+    check_out_search = ''
+    if operator.eq(check_out_date, ''):
+        check_out_search = 'check_out_date > ""'
+    else:
+        check_out_search = 'check_out_date < ' + check_in_date
 
     placeholder = [hotelplaceholder, guestplaceholder, roomplaceholder, sortchoice]
-    sql = sql + hotelsearch + ' and ' + guestsearch + ' and ' + roomsearch + 'order by ' + sortchoice + ' desc'
+    sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
     print(sql)
     # return sql
 
@@ -664,9 +719,12 @@ def load_search_result(hotelclass, guestrenting, roomtype, sortchoice):
     for h_tuple in cur.fetchall():
         t_list.append(h_tuple)
         print(h_tuple)
-
+    print(placeholder)
+    print(t_list)
     return placeholder, t_list
     pass
+
+
 
 
 @app.route('/post', methods=['POST'])

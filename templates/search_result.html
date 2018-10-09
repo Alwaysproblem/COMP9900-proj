@@ -1,15 +1,23 @@
-{% extends "base.html" %}
+{% extends "search_base.html" %}
 <!--{% block beforehead %}-->
 <!--<link rel="stylesheet" href="static/home.css" type="text/css">-->
 <!--{% endblock %}-->
 {% block body_contents %}
-<table class='table'>
-    <tr><th>ID</th><th>hotel</th></tr>
+<div>
     {% for message in results %}
-    <tr>
-        <td width='50%'>{{ message }}</td>
-        <td width='50%'>{{ message[3] }}</td>
-    </tr>
+    <div class="house-price">￥<span>{{ message[12] }}</span>/day</div>
+    <li class="house-item">
+        <a href="/detail?id={{ message[0] }}">image</a>
+        <!--add image-->
+        <div class="house-desc">
+            <div class="house-price">￥<span>{{ message[12] }}</span>/day</div>
+            <div class="house-intro">
+                <span class="house-title">{{ message[2] }}</span>
+                <em>出租{{ message[11] }}type - {{ message[8] }}date - {{ message[3] }}address</em>
+                    <!--<em>出租 house.room 间 -  house.order_count 次入住 -house.address</em>-->
+            </div>
+        </div>
+    </li>
     {% endfor %}
-</table>
+</div>>
 {% endblock %}

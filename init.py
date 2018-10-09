@@ -71,28 +71,28 @@ def create_table():
 if __name__ == '__main__':
     create_table()
 
-# def load_hotel_info():
-#     conn.execute("delete from hotel")
-#     key = '"ID", "hotelid", "hotel", "hotel_class", "guest_renting", "room_type", "price"'
-#     value = '"1", "1", "isis", "5", "4", "single", 500'
-#     sql = 'insert into hotel (' + key + ') values (' + value + ')'
-#     conn.execute(sql)
-#     value = '"2", "2", "saf", "4", "3", "double", 400'
-#     sql = 'insert into hotel (' + key + ') values (' + value + ')'
-#     conn.execute(sql)
-#     value = '"3", "3", "afea", "3", "5", "family", 600'
-#     sql = 'insert into hotel (' + key + ') values (' + value + ')'
-#     conn.execute(sql)
-#     value = '"4", "4", "afafe", "2", "4", "multiple", 600'
-#     sql = 'insert into hotel (' + key + ') values (' + value + ')'
-#     conn.execute(sql)
-#     value = '"5", "5", "aeaeae", "1", "1", "double", 200'
-#     sql = 'insert into hotel (' + key + ') values (' + value + ')'
-#     conn.execute(sql)
-#     value = '"6", "6", "isisas", "5", "3", "multiple", 350'
-#     sql = 'insert into hotel (' + key + ') values (' + value + ')'
-#     conn.execute(sql)
-#     conn.commit()
+def load_hotel_info():
+    conn.execute("delete from hotel")
+    key = '"HouseID", "userid", "Street", "Star", "RoomType", "price", "check_in_date", "check_out_date"'
+    value = '"1", "1", "isis", "5", "single", 500, "10/09/2018", "20/09/2018"'
+    sql = 'insert into hotel (' + key + ') values (' + value + ')'
+    conn.execute(sql)
+    value = '"2", "2", "saf", "4", "double", 400, "12/09/2018", "20/09/2018"'
+    sql = 'insert into hotel (' + key + ') values (' + value + ')'
+    conn.execute(sql)
+    value = '"3", "3", "afea", "3", "family", 600, "10/09/2018", "24/09/2018"'
+    sql = 'insert into hotel (' + key + ') values (' + value + ')'
+    conn.execute(sql)
+    value = '"4", "4", "afafe", "2", "multiple", 600, "14/09/2018", "18/09/2018"'
+    sql = 'insert into hotel (' + key + ') values (' + value + ')'
+    conn.execute(sql)
+    value = '"5", "5", "aeaeae", "1", "double", 200, "20/09/2018", "21/09/2018"'
+    sql = 'insert into hotel (' + key + ') values (' + value + ')'
+    conn.execute(sql)
+    value = '"6", "6", "isisas", "5", "multiple", 350, "12/09/2018", "23/09/2018"'
+    sql = 'insert into hotel (' + key + ') values (' + value + ')'
+    conn.execute(sql)
+    conn.commit()
 #     # key += ', "' + match.group(1) + '"'
 #     # value += ', "' + match.group(2) + '"'
 #     # sql = 'insert into students (' + key + ') values (' + value + ')'
@@ -101,7 +101,7 @@ if __name__ == '__main__':
 # #     conn.commit()
 
 # create_table()
-# load_hotel_info()
+load_hotel_info()
 # detial = str(5)
 # # sql = 'select * from hotel where hotel_class = 5'
 # hotelclass = '-1'
