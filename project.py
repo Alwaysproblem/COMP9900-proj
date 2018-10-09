@@ -644,6 +644,8 @@ def search():
     sortchoice = request.form.get('sortchoice')
     check_in_date = request.form.get('check_in')
     check_out_date = request.form.get('check_out')
+    print(check_in_date)
+    print(check_out_date)
     placeholder, result_list = load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date)
     if result_list == []:
         return render_template('noresult.html', placeholder = ['hotel class', 'suburb', 'room type', 'sort choice'])
@@ -716,7 +718,7 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
     if operator.eq(check_out_date, ''):
         check_out_search = 'check_out_date > ""'
     else:
-        check_out_search = 'check_out_date < ' + check_out_date
+        check_out_search = 'check_out_date > ' + check_out_date
 
     placeholder = [hotelplaceholder, suburbplaceholder, roomplaceholder, sortchoice]
     sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + suburbsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
