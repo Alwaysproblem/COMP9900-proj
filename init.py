@@ -33,7 +33,9 @@ def create_table():
                     price int(50),
                     description char(255),
                     Image char(50),
-                    post_time char(50)
+                    post_time char(50),
+                    booking char(50),
+                    full_address char(255)
                     );
                     ''')
 
@@ -101,7 +103,7 @@ def load_hotel_info():
 # #     conn.commit()
 
 # create_table()
-load_hotel_info()
+# load_hotel_info()
 # detial = str(5)
 # # sql = 'select * from hotel where hotel_class = 5'
 # hotelclass = '-1'

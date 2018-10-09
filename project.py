@@ -353,7 +353,6 @@ def edit_profile():
 ############################彭霄汉end###############################
 ##################Yongxi start#################
 from form import PersonForm
-# import datetime
 import os
 from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -391,6 +390,9 @@ def comd_gen(Pform, Image_dir):
     # save post time
     Post_time = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.now())
 
+    Booking_state = False
+    Full_address = ' '.join([Rooms + '/' + Streets, Suburb, State, Postcode])
+
     cmd = f"""INSERT INTO hotel VALUES (
         "{Userid}",
         "{UserEmail}",
@@ -407,12 +409,15 @@ def comd_gen(Pform, Image_dir):
         "{Price}",
         "{Description}",
         "{Image}",
-        "{Post_time}"
+        "{Post_time}",
+        "{Booking_state}",
+        "{Full_address}"
         )"""
     return cmd
 
 
 @app.route("/showAll")
+# @login_required
 def showAll():
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
@@ -432,7 +437,9 @@ def showAll():
         "Price",
         "Description",
         "Image",
-        "Post_time"
+        "Post_time",
+        "Booking_state",
+        "Full_address"
     ]
     info_tuples = cur.execute("""SELECT * FROM hotel;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
@@ -441,6 +448,7 @@ def showAll():
 
 
 @app.route("/show")
+@login_required
 def show():
     print(current_user.ID)
     conn = sqlite3.connect("small.db")
@@ -461,7 +469,9 @@ def show():
         "Price",
         "Description",
         "Image",
-        "Post_time"
+        "Post_time",
+        "Booking_state",
+        "Full_address"
     ]
     info_tuples = cur.execute("""SELECT * FROM hotel order by Post_time desc limit 1;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
@@ -470,6 +480,7 @@ def show():
 
 
 @app.route("/add", methods=['GET', "POST"])
+@login_required
 def add():
     AcForm = PersonForm()
     if AcForm.validate_on_submit():
