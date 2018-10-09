@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>爱家-房间信息</title>
+    <title>Estate</title>
     <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/css/reset.css" rel="stylesheet">
@@ -21,16 +21,14 @@
                 <a class="nav-btn fl" href="#" onclick="hrefBack();"><span><i class="fa fa-angle-left fa-2x"></i></span></a>
             </div>
         </div>
-
         <span id="house_detail"></span>
-
         <!--<script id="detail" type="text/html">-->
         <div class="swiper-container">
             <ul class="swiper-wrapper">
-                <li class="swiper-slide">image</li>
+                <li class="swiper-slide"><img src="{{ house_detail.Image }}" height=""></li>
             </ul>
             <div class="swiper-pagination"></div>
-            <div class="house-price">￥<span>{{ house_detail[12] }}</span>/day</div>
+            <div class="house-price">￥<span>{{ house_detail.price }}</span>/day</div>
         </div>
         <div class="detail-con">
             <div class="detail-header layout-style">

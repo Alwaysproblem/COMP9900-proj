@@ -5,16 +5,15 @@
 {% block body_contents %}
 <div>
     {% for message in results %}
-    <div class="house-price">￥<span>{{ message[12] }}</span>/day</div>
     <li class="house-item">
-        <a href="/detail?id={{ message[0] }}">image</a>
+        <a href="/detail?HouseID={{ message.HouseID }}"><img src="{{ message.Image }}" width="100" height="100"></a>
         <!--add image-->
         <div class="house-desc">
-            <div class="house-price">￥<span>{{ message[12] }}</span>/day</div>
             <div class="house-intro">
-                <span class="house-title">{{ message[2] }}</span>
-                <em>出租{{ message[11] }}type - {{ message[8] }}date - {{ message[3] }}address</em>
-                    <!--<em>出租 house.room 间 -  house.order_count 次入住 -house.address</em>-->
+                <div class="house-price">￥<span>{{ message.price }}</span>/day</div>
+                <em>Address:   {{ message.full_address }}</em><br>
+                <em>Room Type:   {{ message.RoomType }}</em><br>
+                <em>Renting Date:  {{ message.check_in_date }} - {{ message.check_out_date }}</em><br>
             </div>
         </div>
     </li>

@@ -610,54 +610,51 @@ def view_request(requestID):
 
 ##################Zeng End#################
 
+class house_info():
+    def __init__(self, each_house):
+        self.userid = each_house[0]
+        self.useremail = each_house[1]
+        self.HouseID = each_house[2]
+        self.RoomNo = each_house[3]
+        self.Street = each_house[4]
+        self.Suburb = each_house[5]
+        self.State = each_house[6]
+        self.Postcode = each_house[7]
+        self.RoomType = each_house[8]
+        self.Star = each_house[9]
+        self.check_in_date = each_house[10]
+        self.check_out_date = each_house[11]
+        self.price = each_house[12]
+        self.description = each_house[13]
+        self.Image = each_house[14]
+        self.post_time = each_house[15]
+        self.booking = each_house[16]
+        self.full_address = each_house[17]
+
 @app.route('/search_init', methods =['GET','POST'])
 def search_init():
-    sql = 'select * from hotel'
-    print(sql)
-    cur = query(sql)
-    t_list = []
-    for h_tuple in cur.fetchall():
-        t_list.append(h_tuple)
-        print(h_tuple)
-    print(t_list)
-    placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice']
+    placeholder = ['hotel class', 'suburb', 'room type', 'sort choice']
     return render_template('noresult.html', placeholder = placeholder)
 
 @app.route('/search', methods = ['POST'])
 def search():
-    sql = 'select * from hotel'
-    print(sql)
-    cur = query(sql)
-    t_list = []
-    for h_tuple in cur.fetchall():
-        t_list.append(h_tuple)
-        print(h_tuple)
-    print(t_list)
-
     Star = request.form.get('hotelclass')
-    # guestrenting = request.form.get('guestrenting')
+    Suburb = request.form.get('suburb')
     RoomType = request.form.get('roomtype')
     sortchoice = request.form.get('sortchoice')
     check_in_date = request.form.get('check_in')
     check_out_date = request.form.get('check_out')
-    print(check_in_date)
-    # result_list = []
-    placeholder, result_list = load_search_result(Star, RoomType, sortchoice, check_in_date, check_out_date)
+    placeholder, result_list = load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date)
     if result_list == []:
-        return render_template('noresult.html', placeholder = ['hotel class', 'guest renting', 'room type', 'sort choice'])
+        return render_template('noresult.html', placeholder = ['hotel class', 'suburb', 'room type', 'sort choice'])
     return render_template('search_result.html', placeholder = placeholder, results = result_list)
-
-# @app.route('/search_result', methods = ['POST'])
-# def search_result():
-#     return render_template('search_result.html')
 
 @app.route('/detail', methods = ['GET','POST'])
 def detail():
-    house_id = request.args.get('id')
+    house_id = request.args.get('HouseID')
+    print(house_id)
     house_detail = load_house_info(house_id)
-    # print(house_id)
     return render_template('house_detail.html', house_detail = house_detail)
-
 
 @app.route('/booking', methods = ['GET','POST'])
 def booking():
@@ -667,13 +664,13 @@ def booking():
 
 def load_house_info(id):
     sql = 'select * from hotel where HouseID = "' + id + '"'
+    print(sql)
     cur = query(sql)
     h_tuple = cur.fetchone()
-    # print(h_tuple)
-    return h_tuple
+    house = house_info(h_tuple)
+    return house
 
-def load_search_result(Star, RoomType, sortchoice, check_in_date, check_out_date):
-    # sql = 'select * from hotel where hotel_class="' + detail + '"'
+def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date):
     sql = 'select * from hotel where '
     temp = ''
     hotelplaceholder = ''
@@ -687,16 +684,14 @@ def load_search_result(Star, RoomType, sortchoice, check_in_date, check_out_date
         hotelsearch = 'Star =' + Star
         hotelplaceholder = Star+ ' starts'
 
-    guestsearch = ''
-    # if operator.eq(guestrenting, None):
-    #     guestsearch = 'guest_renting != -1'
-    #     guestplaceholder = 'guest renting'
-    # elif operator.eq(guestrenting,'2'):
-    #     guestsearch = '(guest_renting = 2 or guest_renting = 1 or guest_renting = 0)'
-    #     guestplaceholder = '0-2 starts'
-    # else:
-    #     guestsearch = 'guest_renting = ' + guestrenting
-    guestplaceholder = 'guest renting'
+    suburbsearch = ''
+    if operator.eq(Suburb, None):
+        suburbsearch = 'Suburb != "None"'
+        suburbplaceholder = 'suburb'
+    else:
+        suburbsearch = 'Suburb = ' + Suburb
+        suburbplaceholder = 'suburb'
+    print(suburbsearch)
 
     roomsearch = ''
     if operator.eq(RoomType, None):
@@ -711,40 +706,27 @@ def load_search_result(Star, RoomType, sortchoice, check_in_date, check_out_date
         sortsearch = 'Star'
     else:
         sortsearch = sortchoice
-
     check_in_search = ''
     if operator.eq(check_in_date, ''):
         check_in_search = 'check_in_date > ""'
     else:
-        check_in_search = 'check_in_date < ' + check_in_date
+        check_in_search = 'check_in_date > ' + check_in_date
 
     check_out_search = ''
     if operator.eq(check_out_date, ''):
         check_out_search = 'check_out_date > ""'
     else:
-        check_out_search = 'check_out_date < ' + check_in_date
+        check_out_search = 'check_out_date < ' + check_out_date
 
-    placeholder = [hotelplaceholder, guestplaceholder, roomplaceholder, sortchoice]
-    sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
+    placeholder = [hotelplaceholder, suburbplaceholder, roomplaceholder, sortchoice]
+    sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + suburbsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
     print(sql)
-    # return sql
-
     cur = query(sql)
     t_list = []
     for h_tuple in cur.fetchall():
-        t_list.append(h_tuple)
-        print(h_tuple)
-    print(placeholder)
-    print(t_list)
+        house = house_info(h_tuple)
+        t_list.append(house)
     return placeholder, t_list
-    pass
-
-
-
-
-@app.route('/post', methods=['POST'])
-def post():
-    pass
 
 
 if __name__ == '__main__':
