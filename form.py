@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField, IntegerField, SelectField, DateField, MultipleFileField
+from wtforms import StringField, BooleanField, SubmitField, IntegerField, SelectField, DateField, MultipleFileField, TextAreaField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms.validators import DataRequired, email
+from wtforms.validators import DataRequired, email, optional, required, length
 from werkzeug.utils import secure_filename
 
 class PersonForm(FlaskForm):
@@ -44,8 +44,8 @@ class PersonForm(FlaskForm):
                 "CheckOut Date(MM/DD/YY)", 
                 validators=[DataRequired()],
                 format="%m/%d/%Y")
-    Price = IntegerField("Renting Price per week", validators=[DataRequired()])
-    Description = StringField("Description", validators=[DataRequired()])
+    Price = IntegerField("Renting Price per day", validators=[DataRequired()])
+    Description = TextAreaField("Description", validators=[optional(), length(max=250)])
     Image = FileField("image", validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     submit = SubmitField("Submit")
 
