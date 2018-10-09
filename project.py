@@ -716,7 +716,7 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
     if operator.eq(check_out_date, ''):
         check_out_search = 'check_out_date > ""'
     else:
-        check_out_search = 'check_out_date < ' + check_out_date
+        check_out_search = 'check_out_date > ' + check_out_date
 
     placeholder = [hotelplaceholder, suburbplaceholder, roomplaceholder, sortchoice]
     sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + suburbsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
