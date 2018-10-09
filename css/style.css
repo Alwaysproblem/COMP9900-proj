@@ -19,17 +19,17 @@ ul{
 	margin:0;
 	padding:0;
 }
+
 .w3ls-banner{
 	/* background:url(../images/b.jpg)no-repeat 0px 0px; */
-	background:url(../images/b.jpg)no-repeat center fixed;
-	/* height: -webkit-fill-available; */
+	background:url(../images/a.jpg)no-repeat center fixed;
 	background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-position: center center;
 	min-height: 100%;
-
 }
+
 /*-- banner --*/
 input[type="submit"],.w3agile_contact_right_agileinfo p a,.w3_copy_right p a{
 	transition:.5s all;
