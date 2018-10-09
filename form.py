@@ -23,7 +23,7 @@ class PersonForm(FlaskForm):
             choices=[
                 ("Single Room", "Single Room"),
                 ("Double Room", "Double Room"),
-                ("Multiple Room", "Multiple Room")
+                ("Multiple Rooms", "Multiple Rooms")
             ]
         )
     Star = SelectField(

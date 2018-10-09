@@ -376,7 +376,11 @@ def comd_gen(Pform, Image_dir):
     RoomType = Pform.RoomType.data
     Star = Pform.Star.data
     CheckIn = Pform.check_in_date.data
+    CheckIn = '/'.join(str(CheckIn).split("-")[1:] + str(CheckIn).split("-")[0:1])
+
     CheckOut = Pform.check_out_date.data
+    CheckOut = '/'.join(str(CheckOut).split("-")[1:] + str(CheckOut).split("-")[0:1])
+
     Price = Pform.Price.data
     Description = Pform.Description.data.strip()
 

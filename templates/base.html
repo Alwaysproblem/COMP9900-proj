@@ -16,8 +16,6 @@
     {% endblock %}
 </head>
 <body>
-
-<body>
     <div class="w3ls-banner">
         <div class="center-container">
             <div class="navigation">
@@ -42,7 +40,7 @@
                                 
                                 <li><a href="/request" class="scroll" data-hover="Agents">Post request</a></li>
                                 
-                                <li><a href="/personal_website" class="scroll" data-hover="Agents"> Personalwebsite</a></li>
+                                <!-- <li><a href="/personal_website" class="scroll" data-hover="Agents"> Personalwebsite</a></li> -->
                                 <li><a href="/edit_profile" class="scroll" data-hover="Agents"> Edit Profile</a></li>
                                 <li><a href="/logout" class="scroll" data-hover="Agents">Logout</a></li>
                                 {% endif %}
@@ -53,21 +51,17 @@
                 </div>
             </div>
         </div>
-            <div class="container" style="margin-left: 30%;margin-top: 3%">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li style="color: yellow; padding-bottom: 20px">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+        <div class="container" style="margin-left: 30%;margin-top: 3%">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}<ul>
+                    {% for message in messages %}
+                        <li style="color: yellow; padding-bottom: 20px">{{ message }}</li>
+                    {% endfor %}</ul>
+                {% endif %}
+            {% endwith %}
 
-    {% block body_contents %}
-    {% endblock %}
-
-    </div>
-
+            {% block body_contents %}
+            {% endblock %}
+        </div>
 </body>
 </html>
