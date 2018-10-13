@@ -448,13 +448,13 @@ def showAll():
     info_tuples = cur.execute("""SELECT * FROM hotel;""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
     conn.close()
-    return render_template('show.html', posts=posts)
+    return render_template('showdb.html', posts=posts)
 
 
 @app.route("/show")
-@login_required
+# @login_required
 def show():
-    print(current_user.ID)
+    # print(current_user.ID)
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
     keys = [
@@ -497,6 +497,36 @@ def add():
         flash("the information is added", "success")
         return redirect(url_for('show'))
     return render_template('add.html', title='Add', form=AcForm)
+
+@app.route("/ShowBooking", methods=['GET', "POST"])
+def ShowBooking():
+    showNum = 3
+    conn = sqlite3.connect("small.db")
+    cur = conn.cursor()
+    keys = [
+        "UserID",
+        "UserEmail",
+        "HouseID",
+        "RoomNo",
+        "Street",
+        "Suburb",
+        "State",
+        "Postcode",
+        "RoomType",
+        "Star",
+        "CheckIn",
+        "CheckOut",
+        "Price",
+        "Description",
+        "Image",
+        "Post_time",
+        "Booking_state",
+        "Full_address"
+    ]
+    info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False' order by Post_time desc limit {showNum};""")
+    posts = [tupletodict(keys, tup) for tup in info_tuples]
+    conn.close()
+    return render_template('showBooking.html', posts=posts)
 
 
 ##################Yongxi End#################
