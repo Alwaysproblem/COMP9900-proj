@@ -296,16 +296,6 @@ def register():
 def profile():
     return render_template('profile.html', title='profile')
 
-@app.route('/my_postings', methods=['GET', 'POST'])
-@login_required
-def my_postings():
-    return render_template('my_postings.html', title='my_postings')
-
-@app.route('/my_bookings', methods=['GET', 'POST'])
-@login_required
-def my_bookings():
-    return render_template('my_bookings.html', title='my_bookings')
-
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -543,6 +533,11 @@ def ShowBooking():
     conn.close()
     return render_template('showBooking.html', posts=posts)
 
+@app.route('/my_postings', methods=['GET', 'POST'])
+@login_required
+def my_postings():
+    return render_template('my_postings.html', title='my_postings')
+
 
 ##################Yongxi End#################
 
@@ -654,6 +649,11 @@ def view_request(requestID):
 
 
 ##################Zeng End#################
+
+@app.route('/my_bookings', methods=['GET', 'POST'])
+@login_required
+def my_bookings():
+    return render_template('my_bookings.html', title='my_bookings')
 
 class house_info():
     def __init__(self, each_house):
