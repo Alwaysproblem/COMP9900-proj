@@ -171,7 +171,7 @@ res = cur.fetchall()
 if len(res) > 0:
     Usercount = res[0][0]
 else:
-    Usercount = 1
+    Usercount = 0
 
 
 class User(UserMixin):
@@ -376,10 +376,10 @@ def comd_gen(Pform, Image_dir):
     RoomType = Pform.RoomType.data
     Star = Pform.Star.data
     CheckIn = Pform.check_in_date.data
-    CheckIn = '/'.join(str(CheckIn).split("-")[1:] + str(CheckIn).split("-")[0:1])
+    # CheckIn = '/'.join(str(CheckIn).split("-")[1:] + str(CheckIn).split("-")[0:1])
 
     CheckOut = Pform.check_out_date.data
-    CheckOut = '/'.join(str(CheckOut).split("-")[1:] + str(CheckOut).split("-")[0:1])
+    # CheckOut = '/'.join(str(CheckOut).split("-")[1:] + str(CheckOut).split("-")[0:1])
 
     Price = Pform.Price.data
     Description = Pform.Description.data.strip()
@@ -661,6 +661,13 @@ class house_info():
         self.booking = each_house[16]
         self.full_address = each_house[17]
 
+class user_info():
+    def __init__(self, user):
+        self.ID = user[0]
+        self.username = user[1]
+        self.full_name = user[3]
+        self.email = user[4]
+
 @app.route('/search_init', methods =['GET','POST'])
 def search_init():
     placeholder = ['hotel class', 'suburb', 'room type', 'sort choice']
@@ -672,8 +679,8 @@ def search():
     Suburb = request.form.get('suburb')
     RoomType = request.form.get('roomtype')
     sortchoice = request.form.get('sortchoice')
-    check_in_date = request.form.get('check_in')
-    check_out_date = request.form.get('check_out')
+    check_in_date = request.form.get('start-date')
+    check_out_date = request.form.get('end-date')
     print(check_in_date)
     print(check_out_date)
     placeholder, result_list = load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date)
@@ -683,16 +690,41 @@ def search():
 
 @app.route('/detail', methods = ['GET','POST'])
 def detail():
-    house_id = request.args.get('HouseID')
-    print(house_id)
-    house_detail = load_house_info(house_id)
-    return render_template('house_detail.html', house_detail = house_detail)
+    if current_user.is_authenticated:
+        house_id = request.args.get('HouseID')
+        print(house_id)
+        house_detail, user_detail = load_house_info(house_id)
+        return render_template('house_detail.html', house_detail = house_detail, user_detail = user_detail)
+    else:
+        flash('You need login first')
+        return redirect(url_for('login'))
 
 @app.route('/booking', methods = ['GET','POST'])
 def booking():
-    house_id = request.args.get('id')
+    house_id = request.args.get('HouseID')
     print(house_id)
-    return render_template('booking_house.html')
+    house_detail, user_detail = load_house_info(house_id)
+    return render_template('booking_house.html', house_detail = house_detail, user_detail = user_detail)
+
+@app.route('/order', methods=['GET','POST'])
+def order():
+    print(request.form)
+    start_date = request.form.get('start-date')
+    end_date = request.form.get('end-date')
+    house_address = request.form.get('house_address')
+    house_star = request.form.get('house_star')
+    house_price = request.form.get('house_price')
+    house_roomtype = request.form.get('house_roomtype')
+    startdate = datetime.strptime(start_date, '%Y-%m-%d')
+    enddate = datetime.strptime(end_date, '%Y-%m-%d')
+    rentday = (enddate-startdate).days + 1
+    total_price = float(rentday)*float(house_price)
+    deposit = total_price * 0.2
+    flash('Congratulations on your successful booking')
+    return render_template('show_book.html', house_address=house_address, house_star=house_star,
+                           house_price=house_price, house_roomtype=house_roomtype,
+                           start_date = start_date, end_date = end_date, total_price=total_price,
+                           deposit=deposit)
 
 def load_house_info(id):
     sql = 'select * from hotel where HouseID = "' + id + '"'
@@ -700,7 +732,12 @@ def load_house_info(id):
     cur = query(sql)
     h_tuple = cur.fetchone()
     house = house_info(h_tuple)
-    return house
+    sql = 'select * from users where ID = "' + house.userid + '"'
+    print(sql)
+    cur = query(sql)
+    h_tuple = cur.fetchone()
+    user = user_info(h_tuple)
+    return house, user
 
 def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date):
     sql = 'select * from hotel where '
@@ -759,7 +796,6 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
         house = house_info(h_tuple)
         t_list.append(house)
     return placeholder, t_list
-
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

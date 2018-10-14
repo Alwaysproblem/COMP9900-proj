@@ -37,13 +37,13 @@ class PersonForm(FlaskForm):
                     ('5', '*****')
                 ])
     check_in_date = DateField(
-                "CheckIn Date(MM/DD/YY)", 
+                "CheckIn Date (YY-MM-DD)", 
                 validators=[DataRequired()],
-                format="%m/%d/%Y")
+                format="%Y-%m-%d")
     check_out_date = DateField(
-                "CheckOut Date(MM/DD/YY)", 
+                "CheckOut Date (YY-MM-DD)", 
                 validators=[DataRequired()],
-                format="%m/%d/%Y")
+                format="%Y-%m-%d")
     Price = IntegerField("Renting Price per day", validators=[DataRequired()])
     Description = TextAreaField("Description", validators=[optional(), length(max=250)])
     Image = FileField("image", validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])

@@ -1,9 +1,6 @@
 body {
     background-color: #eee;
 }
-.container {
-    padding: 0px;
-}
 .top-bar {
     position: fixed;
     width: 100%;

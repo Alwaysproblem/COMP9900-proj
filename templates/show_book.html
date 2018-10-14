@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block beforehead %}
+    <link href="/static/css/booking.css" rel="stylesheet">
+    <link href="/static/css/detail.css" rel="stylesheet">
+{% endblock %}
+{% block body_contents %}
+    <div class="house-info layout-style">
+        <h3>Booking Detail</h3>
+        <ul class="house-info-list"  style="list-style-type:none">
+            <li>Address<span>{{ house_address }}</span></li>
+            <li>Room Type<span>{{ house_roomtype }}</span></li>
+            <li>Star<span>{{ house_star }} Star</span></li>
+            <li>Deposit<span>{{ deposit }}</span></li>
+            <li>Total price<span>{{ total_price }}</span></li>
+            <li>Start date<span>{{ start_date }}</span></li>
+            <li>End date<span>{{ end_date }}</span></li>
+        </ul>
+    </div>
+    <div>
+        <a href="/mainpage" class="w3agile_gallery_grid" style="color: #fff"><h1>Back to mainpage</h1></a>
+    </div>
+
+{% endblock %}

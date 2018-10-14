@@ -61,22 +61,46 @@
 
             <div class="container">
                 {% for post in posts %}
-                    <div class="card" style="width: 50%;">
-                            <img class="card-img-top" src="{{post.Image}}" alt="Card image cap">
-                            <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                            </ul>
-                            <div class="card-body">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
+                    <div class="media" style="padding-top: 14%">
+                        <img class="card-img-top" src="{{post.Image}}" style="width: 25%;">
+                        <div class="media-body" >
+                            <div class="card">
+                                <div class="card-body" >
+                                    <ul class="list-group list-group-flush" >
+                                        <li class="list-group-item">UserEmail: {{post.UserEmail}}</li>
+                                        <li class="list-group-item">RoomType: {{post.RoomType}}</li>
+                                        <li class="list-group-item">
+                                            Star Rating
+                                            <span class="badge badge-primary badge-pill">{{post.Star}}</span>
+                                        </li>
+                                        <li class="list-group-item">Address: {{post.Full_address}}</li>
+                                        <li class="list-group-item">Price: AU${{ post.Price }} per day</li>
+                                        <li class="list-group-item">
+                                            Available from: {{ post.CheckIn }} to {{ post.CheckOut }}</li>
+                                        <li class="list-group-item">{{ post.Description }}</li>
+                                        <li class="list-group-item">{{ post.Post_time }}</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- <div class="card" style="width: 50%;">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Cras justo odio</li>
+                                <li class="list-group-item">Dapibus ac facilisis in</li>
+                                <li class="list-group-item">Vestibulum at eros</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                            <img class="card-img-bottom" src="{{post.Image}}" alt="Card image cap">
+                        </div> -->
                     <!-- <article class="media content-section">
                     <div class="media-body">
                         <div class="article-metadata">

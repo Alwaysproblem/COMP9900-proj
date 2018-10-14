@@ -3,7 +3,6 @@ body{
 	padding:0;
 	background:#fff;
 	font-family: 'Open Sans', sans-serif;
-	/* min-height: 100%; */
  }
 ::-webkit-scrollbar{
 	display:none;
@@ -46,7 +45,7 @@ input[type="submit"],.w3agile_contact_right_agileinfo p a,.w3_copy_right p a{
 }
 
 .center-container-main{
-	padding-bottom: 7.8%;
+	padding-bottom: 20%;
 	background: rgba(37, 31, 31, 0.308) no-repeat center fixed;
 	min-height: 100%;
 	/* height: -webkit-fill-available; */

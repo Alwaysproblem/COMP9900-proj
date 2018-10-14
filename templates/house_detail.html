@@ -34,8 +34,8 @@
             <div class="house-info layout-style">
                 <h3>Householder Detail</h3>
                 <ul class="house-info-list"  style="list-style-type:none">
-                    <li>Householder name<span>{{ house_detail.RoomType }}</span></li>
-                    <li>Householder email<span>{{ house_detail.Star }} Star</span></li>
+                    <li>Householder name<span>{{ user_detail.full_name }}</span></li>
+                    <li>Householder email<span>{{ user_detail.email }} Star</span></li>
                 </ul>
             </div>
             <div class="house-facility layout-style">
@@ -45,7 +45,7 @@
                 </ul>
             </div>
         </div>
-        <a href="/booking?userid={{ house_detail.price }}" class="w3agile_gallery_grid" style="color: #fff"><h1 >order now</h1></a>
+        <a href="/booking?HouseID={{ house_detail.HouseID }}" class="w3agile_gallery_grid" style="color: #fff"><h1 >order now</h1></a>
     </div>
 {% endblock %}
 

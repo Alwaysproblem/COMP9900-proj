@@ -1,54 +1,59 @@
 {% extends "base.html" %}
 {% block beforehead %}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="/static/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <link href="/static/css/booking.css" rel="stylesheet">
     <script src="/js/template.js"></script>
     <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="/js/book.js"></script>
+    <script src="/js/booking.js"></script>
     <link href="/static/css/detail.css" rel="stylesheet">
 {% endblock %}
 {% block body_contents %}
 
 
 <form id="searchform" action="order" method="post">
-    <h3 class="page-title">Order</h3>
+    <div style="display: none">
+        <input name="house_address" value="{{ house_detail.full_address }}">
+        <input name="house_star" value="{{ house_detail.Star }}">
+        <input name="house_price" value="{{ house_detail.price }}">
+        <input name="house_roomtype" value="{{ house_detail.RoomType }}">
+
+        <input name="house_detail" value="{{ house_detail.HouseID }}">
+        <input name="house_detail" value="{{ house_detail.HouseID }}">
+
+    </div>
+    <legend class="border-bottom mb-4" style="color: rgb(241, 235, 253);">Order</legend>
     <div class="house-info layout-style col-sm-8 col-lg-offset-2">
         <h3>House Detail</h3>
-
-
         <ul class="house-info-list"  style="list-style-type:none">
-            <li class="price">Room Type<span>￥<span> 200 </span>/晚</span></li>
-            <li>Room Type<span>house_detail.RoomType</span></li>
-            <li>Star<span>house_detail.Star  Star</span></li>
-            <li>Deposit<span>20% of total price</span></li>
-            <li>Earliest check-in time<span> house_detail.check_in_date </span></li>
-            <li>Latest check-out time<span> house_detail.check_out_date </span></li>
-        </ul>
-        <h3>important</h3>
-        <ul >
-            <li class="house-text"><p>￥<span> 200 </span>/晚</p></li>
+            <li>Address<span>{{ house_detail.full_address }}</span></li>
+            <li>Room Type<span>{{ house_detail.RoomType }}</span></li>
+            <li>Star<span>{{ house_detail.Star }} Star</span></li>
+            <li class="price">Price<span>￥<span> {{ house_detail.price }} </span>/晚</span></li>
+            <li class="check_in_date">Earliest check-in time<span>{{ house_detail.check_in_date  }}</span></li>
+            <li class="check_out_date">Latest check-out time<span>{{ house_detail.check_out_date }} </span></li>
         </ul>
         <h3>select-date-range</h3>
         <div class="select-date">
             <div class="input-daterange input-group">
-                <input type="text" class="input-sm form-control" id="start-date">
+                <input type="text" class="input-sm form-control" id="start-date" name="start-date">
                 <span class="input-group-addon">to</span>
-                <input type="text" class="input-sm form-control" id="end-date">
+                <input type="text" class="input-sm form-control" id="end-date" name="end-date">
             </div>
             <div >
                 <span class="order-amount">Money：￥<span></span></span>
+
+                <span class="order-deposit">Deposit：￥<span></span></span>
             </div>
 
         </div>
-                <button class="search-btn" type="submit" value="order">order</button>
+        <button class="order-btn" type="submit" value="order">order</button>
     </div>
 <div class="popup_con">
     <div class="popup">
-        <p>日期有误，请重新选择！</p>
+        <p style="color: red">Wrong Date</p>
     </div>
     <div class="mask"></div>
 </div>
