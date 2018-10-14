@@ -537,7 +537,8 @@ def ShowBooking():
         "Booking_state",
         "Full_address"
     ]
-    info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False' order by Post_time desc limit {showNum};""")
+    # info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False' order by Post_time desc limit {showNum};""")
+    info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False';""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
     conn.close()
     return render_template('showBooking.html', posts=posts)
@@ -793,13 +794,13 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
     if operator.eq(check_in_date, ''):
         check_in_search = 'check_in_date > ""'
     else:
-        check_in_search = 'check_in_date > ' + check_in_date
+        check_in_search = 'check_in_date < "' + check_in_date + '"'
 
     check_out_search = ''
     if operator.eq(check_out_date, ''):
         check_out_search = 'check_out_date > ""'
     else:
-        check_out_search = 'check_out_date > ' + check_out_date
+        check_out_search = 'check_out_date > "' + check_out_date + '"'
 
     placeholder = [hotelplaceholder, suburbplaceholder, roomplaceholder, sortchoice]
     sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + suburbsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
@@ -814,4 +815,3 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.run(debug=True)
-    # print(load_search_result('2','2','mutl','price'))
