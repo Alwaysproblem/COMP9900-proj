@@ -527,8 +527,8 @@ def ShowBooking():
         "Booking_state",
         "Full_address"
     ]
-    # info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False' order by Post_time desc limit {showNum};""")
-    info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False';""")
+    info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False' order by price desc limit {showNum};""")
+    # info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False';""")
     posts = [tupletodict(keys, tup) for tup in info_tuples]
     conn.close()
     return render_template('showBooking.html', posts=posts)
