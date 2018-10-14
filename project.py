@@ -380,11 +380,7 @@ def comd_gen(Pform, Image_dir):
     RoomType = Pform.RoomType.data
     Star = Pform.Star.data
     CheckIn = Pform.check_in_date.data
-    # CheckIn = '/'.join(str(CheckIn).split("-")[1:] + str(CheckIn).split("-")[0:1])
-
     CheckOut = Pform.check_out_date.data
-    # CheckOut = '/'.join(str(CheckOut).split("-")[1:] + str(CheckOut).split("-")[0:1])
-
     Price = Pform.Price.data
     Description = Pform.Description.data.strip()
 
@@ -458,7 +454,6 @@ def showAll():
 @app.route("/show")
 # @login_required
 def show():
-    # print(current_user.ID)
     conn = sqlite3.connect("small.db")
     cur = conn.cursor()
     keys = [
@@ -536,7 +531,45 @@ def ShowBooking():
 @app.route('/my_postings', methods=['GET', 'POST'])
 @login_required
 def my_postings():
-    return render_template('my_postings.html', title='my_postings')
+    House_ID = request.args.get('HouseID')
+    showNum = 3
+    conn = sqlite3.connect("small.db")
+    cur = conn.cursor()
+    if House_ID != None:
+        # print(f" the house ID :{House_ID}")
+        pic_path = cur.execute(f"SELECT Image FROM hotel WHERE HouseID = '{House_ID}';")
+        pic_path = list(pic_path)
+        print(pic_path)
+        if pic_path != []:
+            os.remove(pic_path[0][0][1:])
+            cur.execute(f"DELETE FROM hotel WHERE HouseID = '{House_ID}';")
+            conn.commit()
+
+    keys = [
+        "UserID",
+        "UserEmail",
+        "HouseID",
+        "RoomNo",
+        "Street",
+        "Suburb",
+        "State",
+        "Postcode",
+        "RoomType",
+        "Star",
+        "CheckIn",
+        "CheckOut",
+        "Price",
+        "Description",
+        "Image",
+        "Post_time",
+        "Booking_state",
+        "Full_address"
+    ]
+    info_tuples = cur.execute(f"""SELECT * FROM hotel where userid = {current_user.ID} order by price desc limit {showNum};""")
+    # info_tuples = cur.execute(f"""SELECT * FROM hotel where booking = 'False';""")
+    posts = [tupletodict(keys, tup) for tup in info_tuples]
+    conn.close()
+    return render_template('my_postings.html', title='my_postings', posts=posts)
 
 
 ##################Yongxi End#################
