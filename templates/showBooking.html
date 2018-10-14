@@ -55,13 +55,13 @@
             </div>
 
             <div class="container">
-                <div class="card-deck">
+                <div class="card-deck" style="padding-top: 5%;">
                     {% for post in posts %}
                     <!-- <div class="property"> -->
                             <div class="card" style="width: 30rem; background-color: rgba(0, 0, 0, 0.404); font-weight:300; color: white">
                                 {% if current_user.is_authenticated %}
                                     <a href="/booking?HouseID={{post.HouseID}}">
-                                        <img class="card-img-top" src="{{post.Image}}">
+                                        <img class="card-img-top" src="{{post.Image}}" style="width: 100%;object-fit: cover;">
                                         <div class="card-img-overlay" style="color: black;">
                                             <h3 class="card-title">AU${{ post.Price }}<br>per day</h3>
                                             <!-- <p class="card-text" style="color: black">{{ post.Price }} per day</p> -->
