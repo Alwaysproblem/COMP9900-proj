@@ -539,7 +539,7 @@ def my_postings():
         # print(f" the house ID :{House_ID}")
         pic_path = cur.execute(f"SELECT Image FROM hotel WHERE HouseID = '{House_ID}';")
         pic_path = list(pic_path)
-        print(pic_path)
+        # print(pic_path)
         if pic_path != []:
             os.remove(pic_path[0][0][1:])
             cur.execute(f"DELETE FROM hotel WHERE HouseID = '{House_ID}';")
