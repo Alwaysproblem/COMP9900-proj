@@ -17,51 +17,53 @@
 </head>
 <body>
     <div class="w3ls-banner">
-        <div class="center-container">
-            <div class="navigation">
-                <div class="container">
-                    <div class="agileits-logo">
-                        {% if current_user.is_authenticated %}
-                        <h1><a href="/mainpage">Estate<span class="w3agile" class=navigation-right>Welcome {{current_user.username}}</span></a></h1>
-                        {% else %}
-                         <h1><a href="/mainpage">Estate<span class="w3agile" navigation-right>Offer you the best experience~Just like home</span></a></h1>
-                        {% endif %}
+        <div class="center-container-main">
+            <div class="center-container">
+                <div class="navigation">
+                    <div class="container">
+                        <div class="agileits-logo">
+                            {% if current_user.is_authenticated %}
+                            <h1><a href="/mainpage">Estate<span class="w3agile" class=navigation-right>Welcome {{current_user.username}}</span></a></h1>
+                            {% else %}
+                            <!-- <h1><a href="/mainpage">Estate<span class="w3agile" navigation-right>Offer you the best experience~Just like home</span></a></h1> -->
+                            <h1><a href="/mainpage">Estate<span class="w3agile" navigation-right>Just like home</span></a></h1>
+                            {% endif %}
+                        </div>
+                        <div class="navigation-right">
+                            <span class="menu"><img src="images/menu.png" alt=" " /></span>
+                            <nav class="link-effect-3" id="link-effect-3">
+                                <ul class="nav1 nav">
+                                    <li><a data-hover="Search" href="/search_init">Search</a></li>
+                                    <li><a href="/ShowBooking" class="scroll" data-hover="Agents">property</a></li>
+                                    {% if current_user.is_anonymous %}
+                                    <li><a href="/login" class="scroll" data-hover="Agents">Login</a></li>
+                                    {% else %}
+                                    <li><a href="/add" class="scroll" data-hover="About">Post accomendation</a></li>
+                                    <li><a href="/request" class="scroll" data-hover="Agents">Post request</a></li>
+                                    <li><a href="/edit_profile" class="scroll" data-hover="Agents"> Edit Profile</a></li>
+                                    <li><a href="/logout" class="scroll" data-hover="Agents">Logout</a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="navigation-right">
-                        <span class="menu"><img src="images/menu.png" alt=" " /></span>
-                        <nav class="link-effect-3" id="link-effect-3">
-                            <ul class="nav1 nav">
-                                <li><a data-hover="Search" href="/search_init">Search</a></li>
-                                
-                                {% if current_user.is_anonymous %}
-                                <li><a href="/login" class="scroll" data-hover="Agents">Login</a></li>
-                                {% else %}
-                                <li><a href="/add" class="scroll" data-hover="About">Post accomendation</a></li>
-                                
-                                <li><a href="/request" class="scroll" data-hover="Agents">Post request</a></li>
-                                
-                                <!-- <li><a href="/personal_website" class="scroll" data-hover="Agents"> Personalwebsite</a></li> -->
-                                <li><a href="/edit_profile" class="scroll" data-hover="Agents"> Edit Profile</a></li>
-                                <li><a href="/logout" class="scroll" data-hover="Agents">Logout</a></li>
-                                {% endif %}
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="clearfix"></div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}<ul>
-                    {% for message in messages %}
-                        <li style="color: yellow; padding-bottom: 20px">{{ message }}</li>
-                    {% endfor %}</ul>
-                {% endif %}
-            {% endwith %}
+            <div class="container">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}<ul>
+                        {% for message in messages %}
+                            <!-- <li style="color: yellow; padding-bottom: 20px">{{ message }}</li> -->
+                            <div class="alert alert-success" role="alert">{{ message }}</div>
+                        {% endfor %}</ul>
+                    {% endif %}
+                {% endwith %}
 
-            {% block body_contents %}
-            {% endblock %}
+                {% block body_contents %}
+                {% endblock %}
+            </div>
         </div>
+    </div>
 </body>
 </html>

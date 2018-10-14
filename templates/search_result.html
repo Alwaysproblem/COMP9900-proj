@@ -1,22 +1,96 @@
-{% extends "search_base.html" %}
-<!--{% block beforehead %}-->
-<!--<link rel="stylesheet" href="static/home.css" type="text/css">-->
-<!--{% endblock %}-->
+{% extends "base.html" %}
+{% block beforehead %}
+    <!--  datepicker ui  -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+    <!--  dropdown  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.sumoselect/3.0.2/sumoselect.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sumoselect/3.0.2/jquery.sumoselect.min.js"></script>
+{% endblock %}
 {% block body_contents %}
-<div>
+    <style>
+    select:invalid { color: gray; }
+    </style>
+    <form id="searchform" action="search" method="post">
+    <div class="content col-sm-12 col-lg-offset-2">
+        <div class="content col-sm-4">
+        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Check in:
+            <input id="datepicker1" type="text" class="form-control col-sm-2" placeholder="start date" name="check_in"></p>
+        </div><div class="content col-sm-4">
+        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Check out:
+            <input id="datepicker2" type="text" class="form-control col-sm-2" placeholder="end date" name="check_out"></p>
+        </div>
+    </div>
+    <div class="content col-sm-12 col-lg-offset-2">
+    <div class="content col-sm-2">
+        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Hotel Class:
+            <select class="form-control col-sm-2" name="hotelclass">
+                <option disabled selected value="">{{placeholder[0]}}</option>
+                <option value="5">5 star</option>
+                <option value="4">4 star</option>
+                <option value="3">3 star</option>
+                <option value="2">0-2 star</option>
+            </select>
+        </p>
+    </div><div class="content col-sm-2">
+        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Suburb:
+            <select class="form-control col-sm-2" name="suburb">
+                <option disabled selected value="">{{placeholder[1]}}</option>
+                <option value="5">None</option>
+                <option value="4">None</option>
+                <option value="3">None</option>
+                <option value="2">Nine</option>
+            </select>
+        </p>
+    </div><div class="content col-sm-2">
+        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Room Type:
+            <select class="form-control col-sm-2" name="room type">
+                <option disabled selected value="">{{placeholder[2]}}</option>
+                <option value="Single Room">Single Room</option>
+                <option value="Double Room">Double Room</option>
+                <option value="Multiple Rooms">Multiple Rooms</option>
+            </select>
+        </p>
+    </div><div class="content col-sm-2">
+        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">sort by:
+            <select class="form-control col-sm-2" id="SlectBox1" name="sort by">
+                <option disabled selected value="">{{placeholder[3]}}</option>
+                <option value="Star">Star</option>
+                <option value="post_time">post time</option>
+                <option value="price">price</option>
+            </select></p>
+    </div>
+    </div>
+    <div class="content col-lg-offset-3" style="margin-bottom: 40px">
+        <button class="search-btn" type="submit" value="search" style=" margin-top: 20px; margin-bottom: 40px; font-weight: 800">search</button>
+    </div>
+    </form>
+    <div>
     {% for message in results %}
-    <li class="house-item">
+    <li class="house-item col-lg-offset-2" style="margin-bottom: 40px">
         <a href="/detail?HouseID={{ message.HouseID }}"><img src="{{ message.Image }}" width="100" height="100"></a>
-        <!--add image-->
         <div class="house-desc">
             <div class="house-intro">
-                <div class="house-price">￥<span>{{ message.price }}</span>/day</div>
-                <em>Address:   {{ message.full_address }}</em><br>
-                <em>Room Type:   {{ message.RoomType }}</em><br>
-                <em>Renting Date:  {{ message.check_in_date }} - {{ message.check_out_date }}</em><br>
+                <div class="house-price" style="color: #f8f8ff">￥<span>{{ message.price }}</span>/day</div>
+                <em style="color: #f8f8ff">Address:   {{ message.full_address }}</em><br>
+                <em style="color: #f8f8ff">Room Type:   {{ message.RoomType }}</em><br>
+                <em style="color: #f8f8ff">Renting Date:  {{ message.check_in_date }} - {{ message.check_out_date }}</em><br>
             </div>
         </div>
     </li>
     {% endfor %}
 </div>>
+
+<script>
+    // <!--  datepicker  -->
+    $( function() {
+            $( "#datepicker1" ).datepicker();
+        } );
+        $( function() {
+            $( "#datepicker2" ).datepicker();
+        } );
+</script>
+
 {% endblock %}
