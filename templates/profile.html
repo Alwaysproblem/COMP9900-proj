@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block body_contents %}
+    <h1  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Personal Profile</h1>
+     <div class="row" style="font-size: 13px;color: #fff;font-weight:300">
+        <div class="col-md-4" style="font-weight: 300; margin-bottom: 27px">
+            <h1  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Account Name</h1>
+            {{ current_user.username }}
+            <h1  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Email Address</h1>
+            {{ current_user.email }}
+            <h1  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Full Name</h1>
+            {{ current_user.full_name }}
+            <h1  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Home Suburb</h1>
+            {{ current_user.home_suburb }}
+            <h1  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Home Address</h1>
+            {{ current_user.home }}
+        
+            <li><a href=" " class="scroll" data-hover="Agents">Edit My Profile</a></li>
+            <li><a href="/my_postings" class="scroll" data-hover="Agents">My Postings</a></li>
+            <li><a href="/my_bookings" class="scroll" data-hover="Agents">My Bookings</a></li>
+        </div>
+{% endblock %}

@@ -291,6 +291,20 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    return render_template('profile.html', title='profile')
+
+@app.route('/my_postings', methods=['GET', 'POST'])
+@login_required
+def my_postings():
+    return render_template('my_postings.html', title='my_postings')
+
+@app.route('/my_bookings', methods=['GET', 'POST'])
+@login_required
+def my_bookings():
+    return render_template('my_bookings.html', title='my_bookings')
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
