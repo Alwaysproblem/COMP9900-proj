@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block body_contents %}
-
-
+<div>
+    {% for book in booking_detail %}
+    <li class="house-item col-lg-offset-2" style="margin-bottom: 40px">
+        <img src="{{ book.img }}" width="100" height="100">
+        <div class="house-desc">
+            <div class="house-intro">
+                <div class="house-price" style="color: #f8f8ff">￥<span>{{ book.price }}</span>/day</div>
+                <em style="color: #f8f8ff">:   {{ book.address }}</em><br>
+                <em style="color: #f8f8ff">Room Type:   {{ book.roomtype }}</em><br>
+                <em style="color: #f8f8ff">Renting Date:  {{ book.start_time }} - {{ book.end_time }}</em><br>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</div>
 {% endblock %}

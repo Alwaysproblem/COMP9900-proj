@@ -39,6 +39,19 @@ def create_table():
                     );
                     ''')
 
+    conn.execute("drop table if exists booking")
+    conn.execute('''create table booking (
+                    ID primary key not null,
+                    HouseID char(50),
+                    Img char(50),
+                    Address char(50),
+                    Roomtype char(50),
+                    Price char(50),
+                    userid char(50),
+                    start_time char(50),
+                    end_time char(50));
+                ''')
+
     conn.execute("drop table if exists messages")
     conn.execute('''create table messages (
                     ID int primary key not null,
@@ -73,48 +86,3 @@ def create_table():
 if __name__ == '__main__':
     create_table()
 
-def load_hotel_info():
-    conn.execute("delete from hotel")
-    key = '"HouseID", "userid", "Street", "Star", "RoomType", "price", "check_in_date", "check_out_date"'
-    value = '"1", "1", "isis", "5", "single", 500, "10/09/2018", "20/09/2018"'
-    sql = 'insert into hotel (' + key + ') values (' + value + ')'
-    conn.execute(sql)
-    value = '"2", "2", "saf", "4", "double", 400, "12/09/2018", "20/09/2018"'
-    sql = 'insert into hotel (' + key + ') values (' + value + ')'
-    conn.execute(sql)
-    value = '"3", "3", "afea", "3", "family", 600, "10/09/2018", "24/09/2018"'
-    sql = 'insert into hotel (' + key + ') values (' + value + ')'
-    conn.execute(sql)
-    value = '"4", "4", "afafe", "2", "multiple", 600, "14/09/2018", "18/09/2018"'
-    sql = 'insert into hotel (' + key + ') values (' + value + ')'
-    conn.execute(sql)
-    value = '"5", "5", "aeaeae", "1", "double", 200, "20/09/2018", "21/09/2018"'
-    sql = 'insert into hotel (' + key + ') values (' + value + ')'
-    conn.execute(sql)
-    value = '"6", "6", "isisas", "5", "multiple", 350, "12/09/2018", "23/09/2018"'
-    sql = 'insert into hotel (' + key + ') values (' + value + ')'
-    conn.execute(sql)
-    conn.commit()
-#     # key += ', "' + match.group(1) + '"'
-#     # value += ', "' + match.group(2) + '"'
-#     # sql = 'insert into students (' + key + ') values (' + value + ')'
-# # print(sql)
-# #     conn.execute(sql)
-# #     conn.commit()
-
-# create_table()
-# load_hotel_info()
-# detial = str(5)
-# # sql = 'select * from hotel where hotel_class = 5'
-# hotelclass = '-1'
-# guestrenting = '-1'
-# roomtype = ''
-# # sql = 'select ID, hotelid, hotel, hotel_class, guest_renting from hotel '
-# sql = 'select * from hotel where '+'(hotel_class = 2 or hotel_class = 1 or hotel_class = 0) and (guest_renting = 2 or guest_renting = 1 or guest_renting = 0) and room_type = "double" order by price desc'
-# print(sql)
-# # sql = 'select ID, hotelid, hotel, hotel_class from hotel '
-# cursor = conn.execute(sql)
-# for row in cursor:
-#     print(row)
-#     # cid = row[0]
-#     # mid = row[1]

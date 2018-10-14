@@ -30,6 +30,6 @@ $(document).ready(function () {
             var deposit = parseFloat(0.2 * amount);
             $(".order-amount>span").html(amount.toFixed(2) + "(total " + days + " days)");
             $(".order-deposit>span").html(deposit)
-        // }
+        }
     });
 });

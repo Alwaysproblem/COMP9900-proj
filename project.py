@@ -686,7 +686,8 @@ def view_request(requestID):
 @app.route('/my_bookings', methods=['GET', 'POST'])
 @login_required
 def my_bookings():
-    return render_template('my_bookings.html', title='my_bookings')
+    booking_detail = load_booking(current_user.ID)
+    return render_template('my_bookings.html', title='my_bookings', booking_detail = booking_detail)
 
 class house_info():
     def __init__(self, each_house):
@@ -716,6 +717,17 @@ class user_info():
         self.full_name = user[3]
         self.email = user[4]
 
+class booking_info():
+    def __init__(self, booking):
+        self.HouseID = booking[1]
+        self.img = booking[2]
+        self.address = booking[3]
+        self.roomtype = booking[4]
+        self.price = booking[5]
+        self.userid = booking[6]
+        self.start_time = booking[7]
+        self.end_time = booking[8]
+
 @app.route('/search_init', methods =['GET','POST'])
 def search_init():
     placeholder = ['hotel class', 'suburb', 'room type', 'sort choice']
@@ -729,8 +741,6 @@ def search():
     sortchoice = request.form.get('sortchoice')
     check_in_date = request.form.get('start-date')
     check_out_date = request.form.get('end-date')
-    print(check_in_date)
-    print(check_out_date)
     placeholder, result_list = load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date)
     if result_list == []:
         return render_template('noresult.html', placeholder = ['hotel class', 'suburb', 'room type', 'sort choice'])
@@ -742,6 +752,7 @@ def detail():
         house_id = request.args.get('HouseID')
         print(house_id)
         house_detail, user_detail = load_house_info(house_id)
+        print('booking',house_detail.booking)
         return render_template('house_detail.html', house_detail = house_detail, user_detail = user_detail)
     else:
         flash('You need login first')
@@ -763,16 +774,42 @@ def order():
     house_star = request.form.get('house_star')
     house_price = request.form.get('house_price')
     house_roomtype = request.form.get('house_roomtype')
+    house_id = request.form.get('house_id')
+    house_img = request.form.get('house_img')
     startdate = datetime.strptime(start_date, '%Y-%m-%d')
     enddate = datetime.strptime(end_date, '%Y-%m-%d')
     rentday = (enddate-startdate).days + 1
     total_price = float(rentday)*float(house_price)
     deposit = total_price * 0.2
     flash('Congratulations on your successful booking')
+    # update date
+    update_order(house_id, house_address, house_img, house_price, house_roomtype ,start_date, end_date)
     return render_template('show_book.html', house_address=house_address, house_star=house_star,
                            house_price=house_price, house_roomtype=house_roomtype,
                            start_date = start_date, end_date = end_date, total_price=total_price,
                            deposit=deposit)
+
+def update_order(house_id, house_address, house_img, house_price, house_roomtype ,start_date, end_date):
+
+    print('current_user',current_user.ID)
+    sql = 'update hotel set booking = "False" where HouseID = "' + house_id + '"'
+    update(sql)
+    key = '"ID", "HouseID", "Img", "Address", "Roomtype", "Price", "userid", "start_time", "end_time"'
+    sql = "insert into booking (" + key + ") values ({},'{}','{}','{}','{}','{}','{}','{}')".format \
+        (uuid.uuid4(), house_id, house_img, house_address, house_roomtype, house_price, current_user.ID, start_date, end_date)
+    insert(sql)
+
+    house_detail, user_detail = load_house_info(id)
+    print('nb',house_detail.booking)
+
+def load_booking(id):
+    sql = 'select * from booking where userid = "' + current_user.ID + '" order by start_time desc'
+    cur = query(sql)
+    t_list = []
+    for h_tuple in cur.fetchall():
+        booking_detail = booking_info(h_tuple)
+        t_list.append(booking_detail)
+    return t_list
 
 def load_house_info(id):
     sql = 'select * from hotel where HouseID = "' + id + '"'
@@ -788,7 +825,8 @@ def load_house_info(id):
     return house, user
 
 def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date):
-    sql = 'select * from hotel where '
+    # booking = "False" and
+    sql = 'select * from hotel where booking = "False" and'
     temp = ''
     hotelplaceholder = ''
     if operator.eq(Star, None):
