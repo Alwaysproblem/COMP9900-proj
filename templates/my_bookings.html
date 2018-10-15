@@ -9,9 +9,10 @@
             <div class="house-intro">
                 <div class="house-price" style="color: #f8f8ff">￥<span>{{ book.price }}</span>/day</div>
                 <em style="color: #f8f8ff">:   {{ book.address }}</em><br>
-                <em style="color: #f8f8ff">Room Type:   {{ book.roomtype }}</em><br>
+                <em style="color: #f8f8ff">Room Type:   {{ book.roomtype }} </em><br>
                 <em style="color: #f8f8ff">Renting Date:  {{ book.start_time }} - {{ book.end_time }}</em><br>
             </div>
+            <a href="/my_bookings?HouseID={{ book.HouseID }}" class="w3agile_gallery_grid" style="color: #fff"><h3>delete</h3></a>
         </div>
     </li>
     {% endfor %}

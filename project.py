@@ -81,6 +81,20 @@ def update(sql):
     conn.commit()
     conn.close()
 
+def query_book(sql):
+    conn = sqlite3.connect('book.db', detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
+    cur = conn.cursor()
+    cur.execute(sql)
+    return cur
+
+def change_book(sql):
+    conn = sqlite3.connect('book.db', detect_types=sqlite3.PARSE_DECLTYPES, check_same_thread=False)
+    cur = conn.cursor()
+    print(sql)
+    cur.execute(sql)
+    cur.close()
+    conn.commit()
+    conn.close()
 
 def current_time():
     now = datetime.now()
@@ -686,6 +700,9 @@ def view_request(requestID):
 @app.route('/my_bookings', methods=['GET', 'POST'])
 @login_required
 def my_bookings():
+    houseid = request.args.get("HouseID")
+    if houseid:
+        delete_booking(houseid)
     booking_detail = load_booking(current_user.ID)
     return render_template('my_bookings.html', title='my_bookings', booking_detail = booking_detail)
 
@@ -789,24 +806,36 @@ def order():
                            start_date = start_date, end_date = end_date, total_price=total_price,
                            deposit=deposit)
 
-def update_order(house_id, house_address, house_img, house_price, house_roomtype ,start_date, end_date):
-
-    print('current_user',current_user.ID)
+def delete_booking(house_id):
     sql = 'update hotel set booking = "False" where HouseID = "' + house_id + '"'
     update(sql)
-    key = '"ID", "HouseID", "Img", "Address", "Roomtype", "Price", "userid", "start_time", "end_time"'
-    sql = "insert into booking (" + key + ") values ({},'{}','{}','{}','{}','{}','{}','{}')".format \
-        (uuid.uuid4(), house_id, house_img, house_address, house_roomtype, house_price, current_user.ID, start_date, end_date)
-    insert(sql)
+    sql = 'delete from booking where HouseID = "' + house_id + '"'
+    change_book(sql)
 
-    house_detail, user_detail = load_house_info(id)
+def update_order(house_id, house_address, house_img, house_price, house_roomtype ,start_date, end_date):
+    print('current_user',current_user.ID)
+    sql = 'update hotel set booking = "True" where HouseID = "' + house_id + '"'
+    update(sql)
+    key = '"ID", "HouseID", "Img", "Address", "Roomtype", "Price", "userid", "start_time", "end_time"'
+    sql = "insert into booking (" + key + ") values ('{}','{}','{}','{}','{}','{}','{}','{}','{}')".format \
+        (uuid.uuid4(), house_id, house_img, house_address, house_roomtype, house_price, current_user.ID, start_date, end_date)
+    change_book(sql)
+    sql = 'select * from booking'
+    cur = query_book(sql)
+    t_list = []
+    for h_tuple in cur.fetchall():
+        t_list.append(h_tuple)
+    print('tlist',t_list)
+
+    house_detail, user_detail = load_house_info(house_id)
     print('nb',house_detail.booking)
 
 def load_booking(id):
-    sql = 'select * from booking where userid = "' + current_user.ID + '" order by start_time desc'
-    cur = query(sql)
+    sql = 'select * from booking where userid = "' + str(current_user.ID) + '" order by start_time desc'
+    cur = query_book(sql)
     t_list = []
     for h_tuple in cur.fetchall():
+        print(h_tuple)
         booking_detail = booking_info(h_tuple)
         t_list.append(booking_detail)
     return t_list
@@ -826,7 +855,7 @@ def load_house_info(id):
 
 def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date):
     # booking = "False" and
-    sql = 'select * from hotel where booking = "False" and'
+    sql = 'select * from hotel where booking = "False" and '
     temp = ''
     hotelplaceholder = ''
     if operator.eq(Star, None):

@@ -8,11 +8,11 @@
     <script src="/js/template.js"></script>
 {% endblock %}
 {% block body_contents %}
-    <div class="container">
+    <div class="container" style="margin-top: 80px">
         <span id="house_detail"></span>
         <div class="swiper-container">
             <li class="swiper-slide" style="list-style-type:none"><img src="{{ house_detail.Image }}" height="400px"></li>
-            <div class="house-price">￥<span>{{ house_detail.price }}</span>/day</div>
+            <div class="house-price">AU$<span>{{ house_detail.price }}</span>/day</div>
         </div>
         <div class="detail-con">
             <div class="house-info layout-style">

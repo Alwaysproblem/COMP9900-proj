@@ -39,18 +39,6 @@ def create_table():
                     );
                     ''')
 
-    conn.execute("drop table if exists booking")
-    conn.execute('''create table booking (
-                    ID primary key not null,
-                    HouseID char(50),
-                    Img char(50),
-                    Address char(50),
-                    Roomtype char(50),
-                    Price char(50),
-                    userid char(50),
-                    start_time char(50),
-                    end_time char(50));
-                ''')
 
     conn.execute("drop table if exists messages")
     conn.execute('''create table messages (
