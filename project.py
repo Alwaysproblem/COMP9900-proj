@@ -611,8 +611,6 @@ def getRequest():
 
 @app.route('/request')
 def request_index():
-    # init.create_table()
-    # user_id = session["users.id"]
     posts = getRequest()
     return render_template('request_index.html', request1=posts)
 
@@ -631,7 +629,7 @@ def load_requests(title, address, room_num, start_date, end_date, message):
     conn.commit()
     pass
 
-
+@login_required
 @app.route('/post_request', methods=["GET", "POST"])
 def post_request():
     if request.method == 'POST':
@@ -660,7 +658,7 @@ def getComment():
         "ID",
         "message",
         "requestID",
-        "userID"
+        "userID",
         "time"
     ]
     info_tuples = cur.execute("""SELECT * FROM comments;""")
@@ -677,15 +675,18 @@ def load_comment(comment, requestID):
         count = count + 1
 
     user_id = current_user.ID
+    user = load_user(user_id)
+    now = datetime.now()
     sql = "insert into comments values ('" + str(
-        count) + "','" + comment + "','" + requestID + "', '" + str(user_id) + " ','" + str(now) + "') "
+        count) + "','" + comment + "','" + requestID + "', '" + str(user.username) + "', '" + str(now)[0:19] + "')"
     conn.execute(sql)
     conn.commit()
     pass
 
 
-@app.route('/view_request/<string:requestID>', methods=["GET", "POST"])
-def view_request(requestID):
+@app.route('/view_request', methods=["GET", "POST"])
+def view_request():
+    requestID = request.args.get('requestID')
     posts = getRequest()
     if request.method == 'POST':
         comment = request.form["comment"]
@@ -693,6 +694,7 @@ def view_request(requestID):
 
     comments = getComment()
     return render_template('view_request.html', posts=posts, comments=comments, requestID=requestID)
+
 
 
 ##################Zeng End#################
