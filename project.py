@@ -5,7 +5,6 @@ import collections, operator, re, uuid, sqlite3
 # from Models import *
 from datetime import datetime
 
-now = datetime.now()
 #############################彭霄汉start###############################
 # 1.userid -> username
 # 2.route /
