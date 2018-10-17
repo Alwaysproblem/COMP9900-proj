@@ -30,19 +30,9 @@
             </select>
         </p>
     </div><div class="content col-sm-2">
-        <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Suburb:
-            <select class="form-control col-sm-2" name="suburb">
-                <option disabled selected value="">{{placeholder[1]}}</option>
-                <option value="5">None</option>
-                <option value="4">None</option>
-                <option value="3">None</option>
-                <option value="2">Nine</option>
-            </select>
-        </p>
-    </div><div class="content col-sm-2">
         <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Room Type:
             <select class="form-control col-sm-2" name="room type">
-                <option disabled selected value="">{{placeholder[2]}}</option>
+                <option disabled selected value="">{{placeholder[1]}}</option>
                 <option value="Single Room">Single Room</option>
                 <option value="Double Room">Double Room</option>
                 <option value="Multiple Rooms">Multiple Rooms</option>
@@ -51,7 +41,7 @@
     </div><div class="content col-sm-2">
         <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">sort by:
             <select class="form-control col-sm-2" id="SlectBox1" name="sort by">
-                <option disabled selected value="">{{placeholder[3]}}</option>
+                <option disabled selected value="">{{placeholder[2]}}</option>
                 <option value="Star">Star</option>
                 <option value="post_time">post time</option>
                 <option value="price">price</option>
@@ -59,6 +49,7 @@
     </div>
     </div>
     <div class="content col-lg-offset-3" style="margin-bottom: 40px">
+        <input type="text" placeholder="search here..." name="input_detail">
         <button class="search-btn" type="submit" value="search" style=" margin-top: 20px; margin-bottom: 40px; font-weight: 800">search</button>
     </div>
     </form>

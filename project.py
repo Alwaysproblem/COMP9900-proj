@@ -748,18 +748,21 @@ class booking_info():
 
 @app.route('/search_init', methods =['GET','POST'])
 def search_init():
-    placeholder = ['hotel class', 'suburb', 'room type', 'sort choice']
+    placeholder = ['hotel class', 'room type', 'sort choice']
     return render_template('noresult.html', placeholder = placeholder)
 
 @app.route('/search', methods = ['POST'])
 def search():
+    print(request.form)
     Star = request.form.get('hotelclass')
-    Suburb = request.form.get('suburb')
     RoomType = request.form.get('roomtype')
     sortchoice = request.form.get('sortchoice')
     check_in_date = request.form.get('start-date')
     check_out_date = request.form.get('end-date')
-    placeholder, result_list = load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date)
+    input_detail = request.form.get('input_detail')
+    print(Star)
+    print(check_in_date)
+    placeholder, result_list = load_search_result(Star, input_detail, RoomType, sortchoice, check_in_date, check_out_date)
     if result_list == []:
         return render_template('noresult.html', placeholder = ['hotel class', 'suburb', 'room type', 'sort choice'])
     return render_template('search_result.html', placeholder = placeholder, results = result_list)
@@ -854,7 +857,7 @@ def load_house_info(id):
     user = user_info(h_tuple)
     return house, user
 
-def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_out_date):
+def load_search_result(Star, detail, RoomType, sortchoice, check_in_date, check_out_date):
     # booking = "False" and
     sql = 'select * from hotel where booking = "False" and '
     temp = ''
@@ -869,14 +872,7 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
         hotelsearch = 'Star =' + Star
         hotelplaceholder = Star+ ' starts'
 
-    suburbsearch = ''
-    if operator.eq(Suburb, None):
-        suburbsearch = 'Suburb != "None"'
-        suburbplaceholder = 'suburb'
-    else:
-        suburbsearch = 'Suburb = ' + Suburb
-        suburbplaceholder = 'suburb'
-    print(suburbsearch)
+    detailsearch = 'full_address like "%' + detail + '%"'
 
     roomsearch = ''
     if operator.eq(RoomType, None):
@@ -903,8 +899,8 @@ def load_search_result(Star, Suburb, RoomType, sortchoice, check_in_date, check_
     else:
         check_out_search = 'check_out_date > "' + check_out_date + '"'
 
-    placeholder = [hotelplaceholder, suburbplaceholder, roomplaceholder, sortchoice]
-    sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + suburbsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
+    placeholder = [hotelplaceholder, roomplaceholder, sortchoice]
+    sql = sql + hotelsearch + ' and '+ roomsearch + ' and ' + detailsearch + ' and ' + check_in_search + ' and ' + check_out_search + ' order by ' + sortsearch + ' desc'
     print(sql)
     cur = query(sql)
     t_list = []
