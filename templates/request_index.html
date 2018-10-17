@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block body_contents %}
-    <h3>Request</h3>
-    <a href="{{ url_for('post_request') }}"> Post request</a></br>
-        {% for request in request1 %}
-            <h5><a href="{{ url_for('view_request', requestID = request.ID) }}">{{ request.title }}</a></h5>
-        {% endfor %}
+    <legend class="border-bottom mb-4" style="color: rgb(241, 235, 253);">Request</legend>
+    <div class="content col-sm-12 col-lg-offset-1">
+        <div class="content col-sm-1">
+            <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">
+                <h5><a class="form-control col-sm-4"  href="{{ url_for('post_request') }}"> Post</a></h5>
+        </div>
+    </div>
+    {% for request in request1 %}
+        <div class="content col-sm-12 col-lg-offset-2">
+            <div class="content col-sm-6">
+                <p style="color: #f8f8ff; margin-bottom: 20px; font-weight: 400">
+                <h3><a style="color: #f8f8ff" href="/view_request?requestID={{ request.ID }}">{{ request.title }}</a></h3>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
