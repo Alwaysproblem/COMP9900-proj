@@ -1,2 +1,2 @@
-Week 7 working diary
-Met with the team in the lab, we all have made some progress on our part of the work. However, we had some problems combining our code together. We are using different code structure and different database. We are trying to fix this in a few days.
+Week 11 working diary
+Finshed the profile editing page, user can now change their account name, password,etc. Adjusted css of other pages.
