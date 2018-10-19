@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block body_contents %}
+<!-- <div style="height: 40px;margin-right: auto;margin-left: 30%;display:inline-block;"> -->
+    <h1 style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Sign In</h1>
+
+<!--     <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form> -->
+    <div class="row" style="font-size: 20px;color: #fff;font-weight:300">
+        <div class="col-md-4" style="font-weight: 300">
+            {{ wtf.quick_form(form) }}
+            <p></br>New User? <a href="{{ url_for('register') }}" class="w3agile_gallery_grid" style="color: #fff">Click to Register!</a></p>
+        </div>
+   <!--  <div>
+        <div>
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div> -->
+    
+</div>
+{% endblock %}

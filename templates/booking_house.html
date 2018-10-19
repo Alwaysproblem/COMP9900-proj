@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block beforehead %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/static/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="/static/css/booking.css" rel="stylesheet">
+    <script src="/js/template.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/booking.js"></script>
+    <link href="/static/css/detail.css" rel="stylesheet">
+{% endblock %}
+{% block body_contents %}
+<style type="text/css">
+    .orderbtn{
+        font-size:large;
+        color:#f8f8ff;
+        font-weight: 600;
+        /* float: right; */
+        margin-right:30px;
+        /* margin-top:50px; */
+        text-decoration:none;
+        display:inline-block;
+        background-color: Transparent;
+        border: none;
+    }
+    .orderbtn:hover{
+        /* background: #99CCFF; */
+        color:#33ffff;
+        text-decoration:none;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        /* font-size: xx-large; */
+
+    }
+</style>
+
+<form id="searchform" action="order" method="post">
+    <div style="display: none">
+        <input name="house_address" value="{{ house_detail.full_address }}">
+        <input name="house_star" value="{{ house_detail.Star }}">
+        <input name="house_price" value="{{ house_detail.price }}">
+        <input name="house_roomtype" value="{{ house_detail.RoomType }}">
+        <input name="house_id" value="{{ house_detail.HouseID }}">
+        <input name="house_img" value="{{ house_detail.Image }}">
+
+        <input name="house_detail" value="{{ house_detail.HouseID }}">
+        <input name="house_detail" value="{{ house_detail.HouseID }}">
+
+    </div>
+    <!-- <legend class="border-bottom mb-4" style="color: rgb(241, 235, 253);">Order</legend> -->
+    <div style="color: aliceblue" >      
+    <legend style="color: rgb(241, 235, 253);">Order Detail</legend>
+    <p style="font-size:x-large">Address :
+    </br><span style="font-size:large;font-weight:600">{{ house_detail.full_address }}</span></p>
+    <p style="font-size:x-large">Room Type :
+    </br><span  style="font-size:large;font-weight:600">{{ house_detail.RoomType }}</span></p>
+    <p style="font-size:x-large">Star : &nbsp;
+    <span  style="font-size:large;font-weight:600">{{ house_detail.Star }} Star</span></p>
+    <p class="price" style="font-size:x-large">Price :&nbsp;<span  style="font-size:large;font-weight:600;font-weight:600;color:#33ffff">AU$ <span>{{ house_detail.price }}</span> /day</span></p>
+    <p class="check_in_date" style="font-size:x-large">Earliest check-in time :&nbsp;<span style="font-size:large;font-weight:600;color:#33ffff">{{ house_detail.check_in_date  }}</span></p>
+    <p class="check_out_date" style="font-size:x-large">Latest check-out time :&nbsp;<span style="font-size:large;font-weight:600;color:#33ffff">{{ house_detail.check_out_date }} </span></p>
+    </br>
+    <h3>select-date-range</h3>
+            <div class="select-date" style="background-color: Transparent;width:600px">
+                <div class="input-daterange input-group" style="margin-left:-15px">
+                    <input type="text" class="input-sm form-control" id="start-date" name="start-date" width="200px">
+                    <span class="input-group-addon" style="color:aliceblue">to</span>
+                    <input type="text" class="input-sm form-control" id="end-date" name="end-date" width="200px">
+                </div>
+                <div >
+                    <span class="order-amount">Money：AU$<span></span></span>
+    
+                    <span class="order-deposit">Deposit：AU$<span></span></span>
+                </div>
+    
+            </div>
+            <button class="orderbtn" type="submit" value="order">order</button>
+        </div> 
+    <!-- <div class="house-info layout-style col-sm-8 col-lg-offset-2">
+        <h3>House Detail</h3>
+        <ul class="house-info-list"  style="list-style-type:none">
+            <li>Address<span>{{ house_detail.full_address }}</span></li>
+            <li>Room Type<span>{{ house_detail.RoomType }}</span></li>
+            <li>Star<span>{{ house_detail.Star }} Star</span></li>
+            <li class="price">Price<span>AU$<span> {{ house_detail.price }} </span>/day</span></li>
+            <li class="check_in_date">Earliest check-in time<span>{{ house_detail.check_in_date  }}</span></li>
+            <li class="check_out_date">Latest check-out time<span>{{ house_detail.check_out_date }} </span></li>
+        </ul>
+        <h3>select-date-range</h3>
+        <div class="select-date">
+            <div class="input-daterange input-group">
+                <input type="text" class="input-sm form-control" id="start-date" name="start-date">
+                <span class="input-group-addon">to</span>
+                <input type="text" class="input-sm form-control" id="end-date" name="end-date">
+            </div>
+            <div >
+                <span class="order-amount">Money：AU$<span></span></span>
+
+                <span class="order-deposit">Deposit：AU$<span></span></span>
+            </div>
+
+        </div>
+        <button class="order-btn" type="submit" value="order">order</button>
+    </div> -->
+<div class="popup_con">
+    <div class="popup">
+        <p style="color: red">Wrong Date</p>
+    </div>
+    <div class="mask"></div>
+</div>
+</form>
+
+{% endblock %}

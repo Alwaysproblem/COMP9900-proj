@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block beforehead %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/static/plugins/swiper/css/swiper.min.css" rel="stylesheet">
+    <link href="/static/css/detail.css" rel="stylesheet">
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/plugins/swiper/js/swiper.jquery.min.js"></script>
+    <script src="/js/template.js"></script>
+{% endblock %}
+{% block body_contents %}
+<style type="text/css">
+    a{
+        font-size:large;
+        color:#f8f8ff;
+        font-weight: 600;
+        /* float: right; */
+        margin-right:30px;
+        /* margin-top:50px; */
+        text-decoration:none;
+        display:inline-block;
+    }
+    a:hover{
+        /* background: #99CCFF; */
+        color:#33ffff;
+        text-decoration:none;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        /* font-size: xx-large; */
+
+    }
+</style>
+        <!-- <span id="house_detail"></span> -->
+        <!-- <div> -->
+                <img src="{{ house_detail.Image }}" height="450px" width="600px"/>
+            <!-- <li class="swiper-slide" style="list-style-type:none"><img src="{{ house_detail.Image }}" height="400px"></li> -->
+            <!-- <div class="house-price">AU$<span>{{ house_detail.price }}</span>/day</div> -->
+        <!-- </div> -->
+        <div  style="float:right;margin-right:150px;color:aliceblue;margin-bottom:5px">
+                <h3>House Detail</h3>
+                <p style="color:#33ffff;font-weight:600;margin-bottom:5px;font-size:medium">AU${{ house_detail.price }}/day</p>
+                <h4>address: </h4>
+                <p style="color:aliceblue;">{{ house_detail.full_address }}</p>
+                <h4>address:</h4>
+                <p>{{ house_detail.RoomType }}</p>
+                <h4>Star:</h4>
+                <p>{{ house_detail.Star }} Star</p>
+                <h4>Deposit:</h4>
+                <p style="color:#33ffff;font-weight:600;font-size:medium">20% of total price</p>
+                <h4>Earliest check-in time:</h4>
+                <p>{{ house_detail.check_in_date }}</p>
+                <h4>Latest check-out time:</h4>
+                <p>{{ house_detail.check_out_date }}</p>
+                <h4>Householder name:</h4>
+                <p>{{ user_detail.full_name }}</p>
+                <h4>Householder email:</h4>
+                <p style="color:deepskyblue;font-weight:600;">{{ user_detail.email }} Star</p>
+                <h4>Householder Description</h4>
+                <p style="word-wrap:break-word;width:350px">{{ house_detail.description }}</p>
+        </div>
+        <a href="/booking?HouseID={{ house_detail.HouseID }}"><h2>order now</h2></a>
+{% endblock %}
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Estate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="css/smoothbox.css" type='text/css' >
+    <script src="js/jquery.min.js"></script>
+
+    <link href="http://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    {% block beforehead %}
+    {% endblock %}
+</head>
+<body>
+    <div class="w3ls-banner">
+        <div class="center-container-main">
+            <div class="center-container">
+                <div class="navigation">
+                    <div class="container">
+                        <div class="agileits-logo">
+                            {% if current_user.is_authenticated %}
+                            <h1><a href="/mainpage">Estate<span class="w3agile" class=navigation-right>Welcome back! {{current_user.username}}.</span></a></h1>
+                            {% else %}
+                            <!-- <h1><a href="/mainpage">Estate<span class="w3agile" navigation-right>Offer you the best experience~Just like home</span></a></h1> -->
+                            <h1><a href="/mainpage">Estate<span class="w3agile" navigation-right>Just like home</span></a></h1>
+                            {% endif %}
+                        </div>
+                        <div class="navigation-right">
+                            <span class="menu"><img src="images/menu.png" alt=" " /></span>
+                            <nav class="link-effect-3" id="link-effect-3">
+                                <ul class="nav1 nav">
+                                    <li><a data-hover="Search" href="/search_init">Search</a></li>
+                                    <li><a href="/ShowBooking" class="scroll" data-hover="Agents">property</a></li>
+                                    {% if current_user.is_anonymous %}
+                                    <li><a href="/login" class="scroll" data-hover="Agents">Login</a></li>
+                                    {% else %}
+                                    <li><a href="/add" class="scroll" data-hover="About">Post accomendation</a></li>
+                                    <li><a href="/request" class="scroll" data-hover="Agents">Post request</a></li>
+                                    <li><a href="/profile" class="scroll" data-hover="Agents">My Profile</a></li>
+                                    <li><a href="/logout" class="scroll" data-hover="Agents">Logout</a></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}<ul>
+                        {% for message in messages %}
+                            <!-- <li style="color: yellow; padding-bottom: 20px">{{ message }}</li> -->
+                            <div class="alert" role="alert" style="color: yellow;">{{ message }}</div>
+                        {% endfor %}</ul>
+                    {% endif %}
+                {% endwith %}
+
+                {% block body_contents %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

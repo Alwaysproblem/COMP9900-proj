@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block body_contents %}
+    <h1  style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Register</h1>
+    <div class="row" style="font-size: 13px;color: #fff;font-weight:300">
+        <div class="col-md-4"  style="font-weight: 300">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block body_contents %}
+<style type="text/css">
+    .search-btn{
+        color:white;
+        width: 100px;
+        height:40px;
+        margin-top:30px;
+        /* margin-left:850px; */
+        /* display: block; */
+        font-size: larger;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        background: transparent;
+    }
+    .search-btn:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        color:#00ffff;
+    }
+
+</style>
+{% for post in posts %}
+        {% if requestID == post.ID | string %}
+                <div class="house-desc">
+                      <div class="house-intro">
+                          <div class="house-price" style="color: #f8f8ff">
+                            <h3 style="margin-bottom:30px;color:#00ffff;font-size:xx-large">{{ post.title }}</h3>
+                            <p style="font-size:large;">Aim address:</p><h3 style="margin-bottom:20px;color:#00ffff">{{ post.address }}</h3>
+                            <p style="font-size:large;">Aim room amount: </p><h3 style="margin-bottom:20px;color:#00ffff">{{ post.room_num }}</h3>
+                            <p style="font-size:large;">Rent date:</p><h3 style="margin-bottom:20px;color:#00ffff">{{ post.start_date }} - {{ post.end_date }}</h3>
+                        </div>
+                            <!-- <div class="house-price" style="color: #f8f8ff"><h5>Aim address:</h5><h3>{{ post.address }}</h3></div>
+                            <div class="house-price" style="color: #f8f8ff"><h5>Aim room amount: </h5><h3>{{ post.room_num }}</h3></div>
+                            <div class="house-price" style="color: #f8f8ff"><h5>Rent date:</h5><h3>{{ post.start_date }} - {{ post.end_date }}</h3></div>
+                            <div class="house-price" style="color: #f8f8ff"><h5>Message: </h5><h3>{{ post.message }}</h3></div> -->
+                              <!-- <p style="color: #f8f8ff">Aim address:  {{ post.address }}</p><br><br>
+                                <em style="color: #f8f8ff">Aim room amount:  {{ post.room_num }}</em><br><br>
+                                 <em style="color: #f8f8ff">Rent date:  {{ post.start_date }} - {{ post.end_date }}</em><br><br>
+                                    <em style="color: #f8f8ff">Message:  {{ post.message }}</em><br><br> -->
+                     </div>
+                </div>
+
+                <div class="house-desc">
+                      <div class="house-intro">
+                                {% for comment in comments %}
+                                 {% if comment.requestID == post.ID  %}
+                                 <div class="house-price" style="color: #f8f8ff"><h3>Comments:</h3></div>
+                                 <em style="color: #f8f8ff" >{{ comment.message }} <br>
+                                 From user:  {{ comment.userID }} {{ comment.time }}
+                                 </em><br><br><br>
+                                 {% endif %}
+                                 {% endfor %}
+                     </div>
+                </div>
+
+            <form method="POST">
+                         <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400;font-size:large">Your Comment:
+                           <textarea class="form-control col-sm-2" placeholder="Type your Comment Here...." name = "comment" required autofocus>
+                           </textarea></p>
+            <button class="search-btn" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+            </form>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

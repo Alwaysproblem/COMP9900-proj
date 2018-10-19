@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block body_contents %}
+<style type="text/css">
+    a{
+        font-size:larger;
+        color:#f8f8ff;
+        font-weight: 600;
+        /* float: right; */
+        margin-right:30px;
+        text-decoration:none;
+        display:inline-block;
+        background-color: Transparent;
+        border: none;
+    }
+    a:hover{
+        /* background: #99CCFF; */
+        color:#33ffff;
+        text-decoration:none;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        /* font-size: xx-large; */
+
+    }
+</style>
+<div>
+    {% for book in booking_detail %}
+    <li class="house-item col-lg-offset-2" style="margin-bottom: 40px">
+        <img src="{{ book.img }}" width="350" height="300">
+        <div class="house-desc" style=" margin-left:10px">
+            <div class="house-intro">
+                    <br>
+                <h3 style="color: #33ffff;font-size:large; font-weight:600">${{ book.price }}/day</h3><br>
+                <p style="color: #f8f8ff;font-size:medium; font-weight:600 ">Address:   {{ book.address }}</p><br>
+                <p style="color: #f8f8ff;font-size:medium; font-weight:600">Room Type:   {{ book.roomtype }} </p><br>
+                <p style="color: #f8f8ff;font-size:medium; font-weight:600">Renting Date:  {{ book.start_time }} - {{ book.end_time }}</p><br>
+            </div>
+            <a href="/my_bookings?HouseID={{ book.HouseID }}">Cancel Booking</a>
+        </div>
+    </li>
+    {% endfor %}
+</div>
+{% endblock %}

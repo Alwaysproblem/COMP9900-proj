@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block body_contents %}
+<style type="text/css">
+    a{
+        font-size:large;
+        color:#f8f8ff;
+        font-weight: 600;
+        /* float: right; */
+        margin-right:30px;
+        /* margin-top:-50px; */
+        text-decoration:none;
+        display:inline-block;
+    }
+    a:hover{
+        /* background: #99CCFF; */
+        color:#33ffff;
+        text-decoration:none;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        /* font-size: xx-large; */
+
+    }
+</style>
+    <legend  style="color: #f8f8ff;  margin-bottom: 20px; font-weight: 400">Personal Profile</legend>
+     <div class="row" style="font-size: 13px;color: #fff;font-weight:300">
+        <div class="col-md-4" style="font-weight: 300; margin-bottom: 27px;width:850px">
+            <h3  style="color: #f8f8ff;font-weight: 400">Account Name:</h3>
+            <span style="float: right; margin-right:300px;margin-top:-27px;font-weight: 400;font-size:x-large;color:seashell">{{ current_user.username }}</span>
+        </br>
+            <h3  style="color: #f8f8ff;font-weight: 400">Email Address:</h3>
+            <span style="float: right;margin-right:300px; margin-top:-27px;font-weight: 400;font-size:x-large;color:#33ffff">{{ current_user.email }}</span>
+        </br>
+            <h3  style="color: #f8f8ff; font-weight: 400">Full Name:</h3>
+            <span style="float: right; margin-right:300px; margin-top:-27px;font-weight: 400;font-size:x-large;color:seashell">{{ current_user.full_name }}</span>
+        </br>
+            <h3  style="color: #f8f8ff; font-weight: 400">Home Suburb:</h3>
+            <span style="float: right; margin-right:300px;margin-top:-27px;font-weight: 400;font-size:x-large;color:seashell">{{ current_user.home_suburb }}</span>
+        </br>
+            <h3  style="color: #f8f8ff;font-weight: 400">Home Address:</h3>
+            <span style="float: right;margin-right:300px; margin-top:-27px;font-weight: 400;font-size:x-large;color:seashell">{{ current_user.home }}</span>
+        </br>
+        <div style="margin-top:40px;">
+            <a href="/edit_profile">Edit My Profile</a>
+            <a href="/my_postings">My Postings</a>
+            <a href="/my_bookings">My Bookings</a>
+            <a href="/my_requests">My Requests</a>
+        </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block beforehead %}
+    <link href="/static/css/booking.css" rel="stylesheet">
+    <link href="/static/css/detail.css" rel="stylesheet">
+{% endblock %}
+{% block body_contents %}
+<style type="text/css">
+    a{
+        font-size:larger;
+        color:#f8f8ff;
+        font-weight: 600;
+        /* float: right; */
+        margin-right:30px;
+        margin-top:50px;
+        text-decoration:none;
+        display:inline-block;
+        background-color: Transparent;
+        border: none;
+    }
+    a:hover{
+        /* background: #99CCFF; */
+        color:#33ffff;
+        text-decoration:none;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        /* font-size: xx-large; */
+
+    }
+</style>
+<h3 style="color:#fff">Booking Detail</h3>
+    <div class="house-info layout-style" style="background-color: Transparent;margin-left:-5px">
+        <p style="color:#fff; font-size:larger">Address :<span style=" font-size:larger">{{ house_address }}</span></p>
+        <p style="color:#fff; font-size:larger">Room Type :<span style=" font-size:larger">{{ house_roomtype }}</span></p>
+        <p style="color:#fff; font-size:larger">Star :<span style=" font-size:larger">{{ house_star }} Star</span></p>
+        <p style="color:#fff; font-size:larger">Deposit :<span style=" font-size:larger">{{ deposit }}</span></p>
+        <p style="color:#fff; font-size:larger">Total price :<span style=" font-size:larger">{{ total_price }}</span></p>
+        <p style="color:#fff; font-size:larger">Start date :<span style=" font-size:larger">{{ start_date }}</span></p>
+        <p style="color:#fff; font-size:larger">End date :<span style=" font-size:larger">{{ end_date }}</span></p>
+        <a href="/mainpage">Back to mainpage</a>
+        <!-- <ul class="house-info-list"  style="list-style-type:none">
+            <li>Address<span>{{ house_address }}</span></li>
+            <li>Room Type<span>{{ house_roomtype }}</span></li>
+            <li>Star<span>{{ house_star }} Star</span></li>
+            <li>Deposit<span>{{ deposit }}</span></li>
+            <li>Total price<span>{{ total_price }}</span></li>
+            <li>Start date<span>{{ start_date }}</span></li>
+            <li>End date<span>{{ end_date }}</span></li>
+        </ul> -->
+    </div>
+    <!-- <div>
+        <a href="/mainpage" class="w3agile_gallery_grid" style="color: #fff"><h1>Back to mainpage</h1></a>
+    </div> -->
+
+{% endblock %}

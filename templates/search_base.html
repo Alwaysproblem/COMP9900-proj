@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block beforehead %}
+    <link href="/static/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <script src="/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <link href="/static/css/search.css" rel="stylesheet">
+{% endblock %}
+{% block body_contents %}
+
+<style type="text/css">
+    select:invalid { color: gray; }
+    .search-btn{
+        color:white;
+        width: 100px;
+        height:40px;
+        /* display: block; */
+        font-size: larger;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        background: transparent;
+    }
+    .search-btn:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        color:#FF0066;
+    }
+</style>
+
+        <form id="form-wrapper cf" action="search" method="post">
+        <div class="select-date col-sm-12 col-lg-offset-2">
+                <div class="input-daterange col-sm-4">
+                    <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Check in:
+                        <input type="text" class="form-control col-sm-2" placeholder="start date" id="start-date" name="start-date"></p>
+                </div>
+                <div class="input-daterange col-sm-4">
+                    <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Check out:
+                        <input type="text" class="form-control col-sm-2" placeholder="end date" id="end-date" name="end-date"></p>
+                </div>
+        </div>
+        <div class="content col-sm-12 col-lg-offset-2">
+        <div class="content col-sm-2">
+            <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Hotel Class:
+                <select class="form-control col-sm-2" name="hotelclass">
+                    <option disabled selected value="">{{placeholder[0]}}</option>
+                    <option value="5">5 star</option>
+                    <option value="4">4 star</option>
+                    <option value="3">3 star</option>
+                    <option value="2">0-2 star</option>
+                </select>
+            </p>
+        </div><div class="content col-sm-2">
+            <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">Room Type:
+                <select class="form-control col-sm-2" name="room type">
+                    <option disabled selected value="">{{placeholder[1]}}</option>
+                    <option value="Single Room">Single Room</option>
+                    <option value="Double Room">Double Room</option>
+                    <option value="Multiple Rooms">Multiple Rooms</option>
+                </select>
+            </p>
+        </div>
+        <div class="content col-sm-2">
+            <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400">sort by:
+                <select class="form-control col-sm-2" id="SlectBox1" name="sort by">
+                    <option disabled selected value="">{{placeholder[2]}}</option>
+                    <option value="Star">Star</option>
+                    <option value="post_time">post time</option>
+                    <option value="price">price</option>
+                </select></p>
+        </div>
+        </div>
+        <div class="content col-sm-12 col-lg-offset-2">
+                
+            <input type="text" placeholder="search here..." name="input_detail" style="width:450px;margin-left:15px;height:40px">
+            <button class="search-btn" type="submit" value="search" style=" margin-top: 20px; margin-bottom: 40px; font-weight: 400">search</button>
+        </div>
+        </form>
+
+        <script>
+                $(".input-daterange").datepicker({
+                format: "yyyy-mm-dd",
+                startDate: "today",
+                autoclose: true
+            });
+        </script>
+        
+{% endblock %}

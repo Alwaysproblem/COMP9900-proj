@@ -1,0 +1,56 @@
+body {
+    background-color: #fff;
+}
+.swiper-container, .swiper-slide img, .landlord-pic>img {
+    width: 100%;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: 0px;
+}
+
+.house-price {
+    display: inline-block;
+    position: absolute;
+    bottom: 0px;
+    height: 42px;
+    padding: 0 12px;
+    line-height: 42px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 14px;
+    z-index: 1;
+}
+.house-price>span {
+    font-size: 30px;
+}
+.detail-con {
+    padding: 10px;
+    background-color: #eee;
+}
+.layout-style {
+    background-color: #fff;
+    margin-top: 2px;
+}
+.house-info, .house-facility {
+    padding: 10px 10px 0;
+    font-size: 14px;
+    color: #999;
+}
+.house-info>h3, .house-facility>h3 {
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+}
+.house-info-list, .house-facility-list {
+    margin-top: 10px;
+}
+.house-info-list>li {
+    height: 38px;
+    line-height: 38px;
+    border-bottom: 1px solid #eee;
+}
+.house-info-list>li>span {
+    float: right;
+    color: #333;
+}

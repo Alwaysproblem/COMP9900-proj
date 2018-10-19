@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+<!-- {% block beforehead %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{% endblock %} -->
+
+{% block body_contents %}
+<div class="card-deck" style="margin-top:-60px;width:800px;margin-left:auto;margin-right:auto;">
+    {% for post in posts %}
+        <div class="card" style="width: 30rem; background-color: rgba(0, 0, 0, 0.404); color: white">
+            <img class="card-img-top" src="{{post.Image}}" style="width: 100%;height: 35vw;object-fit: cover;">
+            <!-- <div class="card-img-overlay" style="color: rgb(255, 255, 255); height: 10%;">
+                <span class="card-title" style="background-color:#3399FF;font-size:medium">AU${{ post.Price }}<br>per day</span>
+            </div> -->
+            <div class="card-body" style="padding-top:5%">
+                {% if current_user.is_authenticated %}
+                <p class="card-title"> <h3>{{post.Full_address}}</h3> </p>
+                <span class="badge badge-pill badge-dark" style="background-color:#3399FF;font-size:medium">AU${{ post.Price }}per day</span>
+                {% endif %}
+                
+                <span class="badge badge-pill badge-dark" style="background-color:aqua;font-size:medium;margin-left:20px;color:black">Star Rating: {{post.Star}}</span>
+                <!-- <span class="badge badge-pill badge-light" style="background-color:aqua;font-size:medium">RoomType: {{post.RoomType}}</span> -->
+                <p class="card-title"> <h3>RoomType: {{post.RoomType}}</h3> </p>
+                {% if current_user.is_authenticated %}
+                    <p class="card-title"><h3>Householder Email:</h3><h3 style="color:#3399FF">{{post.UserEmail}}</h3></p>
+                    <!-- <p class="card-text">{{post.UserEmail}}</p> -->
+                {% endif %}
+
+                <p class="card-title">
+                    <h4>Available from: {{post.CheckIn}} to {{post.CheckOut}}<h4>
+                </p>
+                <p class="card-title"><h3>Description:</h3></p>
+                <p class="card-text"><h3>{{post.Description}}</h3></p>
+                <p><h5>Post Time: {{post.Post_time}}</h5></p>
+            </div>
+            <!-- <div class="card-footer">
+                <small class="text-muted"></small>
+            </div> -->
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

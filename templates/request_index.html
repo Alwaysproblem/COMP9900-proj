@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body_contents %}
+<style type="text/css">
+    a{
+        font-size:large;
+        color:#f8f8ff;
+        /* float: right; */
+        margin-right:100px;
+        /* margin-top:-50px; */
+        text-decoration:none;
+        display:inline-block;
+    }
+     a:hover{
+        /* background: #99CCFF; */
+        color:#FF0066;
+        text-decoration:none;
+        /* font-size: xx-large; */
+
+    }
+</style>
+    <!-- <legend class="border-bottom mb-4" style="color: rgb(241, 235, 253);">Request</legend> -->
+    <a href="./post_request">Post a request</a>
+    <!-- <div class="content col-sm-12 col-lg-offset-1">
+         <div class="content col-sm-1">-->
+            <!-- <p style="color: #f8f8ff; margin-bottom: 40px; font-weight: 400"> -->
+                <!-- <a class="form-control col-sm-4"  href="{{ url_for('post_request') }};" style="background:black; "> Post</a> -->
+                
+        <!-- </div>
+    </div> -->
+    {% for request in request1 %}
+        <div class="content col-sm-12 col-lg-offset-2">
+            <div class="content col-sm-6">
+                <p style="color: #f8f8ff; margin-bottom: 20px; font-weight: 400">
+                <h3><a style="color: #f8f8ff" href="/view_request?requestID={{ request.ID }}">{{ request.title }}</a></h3>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
