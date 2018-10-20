@@ -7,8 +7,20 @@ finished epics part
 week05
 base structure of Post part
 
+week07
+view request page
+
 week08
 change database
 
 week09
-merge
+merge post request part with teammate's
+
+week10
+add comments reply part
+
+week11
+link request to User and basic Css design
+
+week12
+final merge and fix bugs
