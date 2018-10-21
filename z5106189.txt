@@ -1,2 +1,2 @@
-Week 11 working diary
-Finshed the profile editing page, user can now change their account name, password,etc. Adjusted css of other pages.
+Week 12 working diary
+Finished all the css of this project, preformed some final adjustments. Prepared the project demo.
