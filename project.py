@@ -1,20 +1,6 @@
-import os
-# import flask
+import os,collections, operator, re, uuid, sqlite3
 from flask import Flask, render_template, session, request, flash, jsonify, redirect, url_for
-import collections, operator, re, uuid, sqlite3
-# from Models import *
 from datetime import datetime
-
-#############################xiaohan start###############################
-# 1.userid -> username
-# 2.route /
-# 3.base website name
-# 4.password password_hash 128
-# from app import app, db
-# import os
-# from flask import render_template, flash, redirect, request, url_for
-# from app.forms import LoginForm, RegistrationForm
-import uuid
 from flask_bootstrap import Bootstrap
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager, UserMixin
 from werkzeug.urls import url_parse
@@ -23,8 +9,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
-
-#############################xiaohan end###############################
 
 class dict2object(object):
     def __init__(self, map):
