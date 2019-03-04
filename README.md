@@ -22,7 +22,10 @@ pip install -r requirement.txt
 ```
 $python3 project.py
 ```
-enter the address in the web browser.
+- enter the address in the web browser.
 ```
 http://127.0.0.1:5000/
 ```
+- we have a temporary user.
+    - user name : z5103793 
+    - user password : 123
